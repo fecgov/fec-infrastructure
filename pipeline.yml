@@ -1,0 +1,42 @@
+jobs:
+- name: terraform-apply
+  plan:
+  - aggregate:
+    - get: pipeline-tasks
+    - get: terraform-templates
+      trigger: true
+  - task: apply-terraform
+    file: pipeline-tasks/terraform-apply.yml
+    params:
+      TERRAFORM_ACTION: apply
+      STACK_NAME: fec
+      TEMPLATE_SUBDIR: terraform
+      S3_TFSTATE_BUCKET: tts-fec
+      AWS_ACCESS_KEY_ID: {{aws-access-key-id}}
+      AWS_SECRET_ACCESS_KEY: {{aws-secret-access-key}}
+      AWS_DEFAULT_REGION: us-gov-west-1
+      TF_VAR_region: us-gov-west-1
+      TF_VAR_rds_az1: us-gov-west-1a
+      TF_VAR_rds_az2: us-gov-west-1b
+      TF_VAR_rds_vpc_id: {{rds-vpc-id}}
+      TF_VAR_rds_cidr_block_az1: {{rds-cidr-block-az1}}
+      TF_VAR_rds_cidr_block_az2: {{rds-cidr-block-az2}}
+      TF_VAR_rds_production_username: {{rds-production-username}}
+      TF_VAR_rds_production_password: {{rds-production-password}}
+      TF_VAR_rds_staging_username: {{rds-staging-username}}
+      TF_VAR_rds_staging_password: {{rds-staging-password}}
+      TF_VAR_rds_development_username: {{rds-development-username}}
+      TF_VAR_rds_development_password: {{rds-development-password}}
+
+resources:
+- name: pipeline-tasks
+  type: git
+  source:
+    uri: https://github.com/18F/cg-pipeline-tasks
+    branch: master
+
+- name: terraform-templates
+  type: git
+  source:
+    uri: https://github.com/18F/fec-infrastructure
+    branch: master
