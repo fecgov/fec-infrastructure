@@ -1,5 +1,6 @@
-variable "rds_az1" {}
-variable "rds_az2" {}
+variable "region" { default = "us-gov-west-1" }
+variable "rds_az1" { default = "us-gov-west-1a" }
+variable "rds_az2" { default = "us-gov-west-1b" }
 variable "rds_vpc_id" {}
 variable "rds_cidr_block_az1" {}
 variable "rds_cidr_block_az2" {}
@@ -9,6 +10,10 @@ variable "rds_staging_username" {}
 variable "rds_staging_password" {}
 variable "rds_development_username" {}
 variable "rds_development_password" {}
+
+provider "aws" {
+  region = "${var.region}"
+}
 
 resource "aws_subnet" "rds_az1" {
   vpc_id = "${var.rds_vpc_id}"
