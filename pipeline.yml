@@ -18,7 +18,7 @@ jobs:
       TF_VAR_region: us-gov-west-1
       TF_VAR_rds_az1: us-gov-west-1a
       TF_VAR_rds_az2: us-gov-west-1b
-      TF_VAR_rds_vpc_id: {{rds-vpc-id}}
+      TF_VAR_rds_vpc_cidr_block: {{rds-vpc-cidr-block}}
       TF_VAR_rds_cidr_block_az1: {{rds-cidr-block-az1}}
       TF_VAR_rds_cidr_block_az2: {{rds-cidr-block-az2}}
       TF_VAR_rds_production_username: {{rds-production-username}}

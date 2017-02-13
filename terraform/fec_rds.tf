@@ -1,7 +1,7 @@
 variable "region" { default = "us-gov-west-1" }
 variable "rds_az1" { default = "us-gov-west-1a" }
 variable "rds_az2" { default = "us-gov-west-1b" }
-variable "rds_vpc_id" {}
+variable "rds_vpc_cidr_block" {}
 variable "rds_cidr_block_az1" {}
 variable "rds_cidr_block_az2" {}
 variable "rds_production_username" {}
@@ -15,8 +15,15 @@ provider "aws" {
   region = "${var.region}"
 }
 
+resource "aws_vpc" "rds" {
+  cidr_block = "${var.rds_vpc_cidr_block}"
+  tags {
+    Name = ""
+  }
+}
+
 resource "aws_subnet" "rds_az1" {
-  vpc_id = "${var.rds_vpc_id}"
+  vpc_id = "${aws_vpc.rds.id}"
   cidr_block = "${var.rds_cidr_block_az1}"
   availability_zone = "${var.rds_az1}"
   tags {
@@ -25,7 +32,7 @@ resource "aws_subnet" "rds_az1" {
 }
 
 resource "aws_subnet" "rds_az2" {
-  vpc_id = "${var.rds_vpc_id}"
+  vpc_id = "${aws_vpc.rds.id}"
   cidr_block = "${var.rds_cidr_block_az2}"
   availability_zone = "${var.rds_az2}"
   tags {
