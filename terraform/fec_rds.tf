@@ -73,6 +73,7 @@ resource "aws_db_instance" "rds_production" {
   password = "${var.rds_production_password}"
   db_subnet_group_name = "${aws_db_subnet_group.rds.name}"
   vpc_security_group_ids = ["${aws_security_group.rds.id}"]
+  backup_retention_period = 30
   publicly_accessible = true
   storage_encrypted = true
   multi_az = true
