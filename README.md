@@ -5,7 +5,6 @@ Terraform configuration and Concourse pipeline for managing custom FEC infrastru
 ## Setup
 * Concourse pipeline is deployed to a concourse team owned by 18F Infrastructure
 * Terraform configuration is deployed via Concourse to an AWS account owned by Infrastructure
-* FEC staff are responsible for adding resources that incur a cost to Chandika
 
 ## Workflow
 * FEC team member sends a pull request to 18F/fec-infrastructure
