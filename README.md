@@ -9,6 +9,5 @@ Terraform configuration and Concourse pipeline for managing custom FEC infrastru
 ## Workflow
 * FEC team member sends a pull request to 18F/fec-infrastructure
 * If applicable, FEC team member sends updated Concourse credentials to infrastructure staff
-* 18F Infrastructure team member reviews pull request to ensure that all resources are properly tagged
 * After pull request is merged, updates are automatically deployed via Concourse
 * If applicable, Infrastructure team member sends updated Terraform outputs to FEC staff

@@ -17,35 +17,23 @@ provider "aws" {
 
 resource "aws_vpc" "rds" {
   cidr_block = "${var.rds_vpc_cidr_block}"
-  tags {
-    Name = ""
-  }
 }
 
 resource "aws_subnet" "rds_az1" {
   vpc_id = "${aws_vpc.rds.id}"
   cidr_block = "${var.rds_cidr_block_az1}"
   availability_zone = "${var.rds_az1}"
-  tags {
-    Name = ""
-  }
 }
 
 resource "aws_subnet" "rds_az2" {
   vpc_id = "${aws_vpc.rds.id}"
   cidr_block = "${var.rds_cidr_block_az2}"
   availability_zone = "${var.rds_az2}"
-  tags {
-    Name = ""
-  }
 }
 
 resource "aws_db_subnet_group" "rds" {
   name = "fec_rds"
   subnet_ids = ["${aws_subnet.rds_az1.id}", "${aws_subnet.rds_az2.id}"]
-  tags {
-    Name = ""
-  }
 }
 
 /* TODO: Lock down ingress rules */
@@ -84,17 +72,11 @@ resource "aws_db_instance" "rds_production" {
   publicly_accessible = true
   storage_encrypted = true
   multi_az = true
-  tags {
-    Name = ""
-  }
 }
 
 resource "aws_db_instance" "rds_production_replica_1" {
   replicate_source_db = "${aws_db_instance.rds_production.identifier}"
   instance_class = "db.t2.micro"
-  tags {
-    Name = ""
-  }
 }
 
 resource "aws_db_instance" "rds_staging" {
@@ -112,9 +94,6 @@ resource "aws_db_instance" "rds_staging" {
   vpc_security_group_ids = ["${aws_security_group.rds.id}"]
   publicly_accessible = true
   storage_encrypted = true
-  tags {
-    Name = ""
-  }
 }
 
 resource "aws_db_instance" "rds_development" {
@@ -132,9 +111,6 @@ resource "aws_db_instance" "rds_development" {
   vpc_security_group_ids = ["${aws_security_group.rds.id}"]
   publicly_accessible = true
   storage_encrypted = true
-  tags {
-    Name = ""
-  }
 }
 
 output "rds_production_url" { value = "${aws_db_instance.rds_production.endpoint}" }
