@@ -71,7 +71,7 @@ resource "aws_db_instance" "rds_production" {
   engine = "postgres"
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
-  allocated_storage = 1650
+  allocated_storage = 2000
   name = "fec"
   username = "fec"
   password = "${var.rds_production_password}"
@@ -101,7 +101,7 @@ resource "aws_db_instance" "rds_staging" {
   engine = "postgres"
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
-  allocated_storage = 1350
+  allocated_storage = 2000
   name = "fec"
   username = "fec"
   password = "${var.rds_staging_password}"
@@ -121,7 +121,7 @@ resource "aws_db_instance" "rds_development" {
   engine = "postgres"
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
-  allocated_storage = 1050
+  allocated_storage = 2000
   name = "fec"
   username = "fec"
   password = "${var.rds_development_password}"
@@ -134,6 +134,11 @@ resource "aws_db_instance" "rds_development" {
   }
 }
 
+resource "aws_db_instance" "rds_development_replica_1" {
+  replicate_source_db = "${aws_db_instance.rds_development.identifier}"
+  instance_class = "db.r3.2xlarge"
+}
+
 output "rds_production_url" { value = "${aws_db_instance.rds_production.endpoint}" }
 output "rds_production_password" { value = "${aws_db_instance.rds_production.password}" }
 output "rds_production_replica_1_url" { value = "${aws_db_instance.rds_production_replica_1.endpoint}" }
@@ -143,3 +148,4 @@ output "rds_staging_password" { value = "${aws_db_instance.rds_staging.password}
 
 output "rds_development_url" { value = "${aws_db_instance.rds_development.endpoint}" }
 output "rds_development_password" { value = "${aws_db_instance.rds_development.password}" }
+output "rds_development_replica_1_url" { value = "${aws_db_instance.rds_development_replica_1.endpoint}" }
