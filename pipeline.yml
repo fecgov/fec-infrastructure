@@ -21,11 +21,8 @@ jobs:
       TF_VAR_rds_vpc_cidr_block: {{rds-vpc-cidr-block}}
       TF_VAR_rds_cidr_block_az1: {{rds-cidr-block-az1}}
       TF_VAR_rds_cidr_block_az2: {{rds-cidr-block-az2}}
-      TF_VAR_rds_production_username: {{rds-production-username}}
       TF_VAR_rds_production_password: {{rds-production-password}}
-      TF_VAR_rds_staging_username: {{rds-staging-username}}
       TF_VAR_rds_staging_password: {{rds-staging-password}}
-      TF_VAR_rds_development_username: {{rds-development-username}}
       TF_VAR_rds_development_password: {{rds-development-password}}
 
 resources:
