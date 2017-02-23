@@ -16,6 +16,10 @@ resource "aws_vpc" "rds" {
   cidr_block = "${var.rds_vpc_cidr_block}"
 }
 
+resource "aws_internet_gateway" "rds" {
+  vpc_id = "${aws_vpc.rds.id}"
+}
+
 resource "aws_subnet" "rds_az1" {
   vpc_id = "${aws_vpc.rds.id}"
   cidr_block = "${var.rds_cidr_block_az1}"
@@ -33,9 +37,28 @@ resource "aws_db_subnet_group" "rds" {
   subnet_ids = ["${aws_subnet.rds_az1.id}", "${aws_subnet.rds_az2.id}"]
 }
 
+resource "aws_route_table" "rds" {
+  vpc_id = "${aws_vpc.rds.id}"
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway.rds.id}"
+  }
+}
+
+resource "aws_route_table_association" "rds_az1" {
+  subnet_id = "${aws_subnet.rds_az1.id}"
+  route_table_id = "${aws_route_table.rds.id}"
+}
+
+resource "aws_route_table_association" "rds_az2" {
+  subnet_id = "${aws_subnet.rds_az2.id}"
+  route_table_id = "${aws_route_table.rds.id}"
+}
+
 /* TODO: Lock down ingress rules */
 resource "aws_security_group" "rds" {
   name = "fec_rds"
+  vpc_id = "${aws_vpc.rds.id}"
 
   ingress {
     from_port = 0
