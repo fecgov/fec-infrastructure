@@ -112,6 +112,7 @@ resource "aws_db_instance" "rds_staging" {
   password = "${var.rds_staging_password}"
   db_subnet_group_name = "${aws_db_subnet_group.rds.name}"
   vpc_security_group_ids = ["${aws_security_group.rds.id}"]
+  backup_retention_period = 30
   publicly_accessible = true
   storage_encrypted = true
 }
@@ -129,6 +130,7 @@ resource "aws_db_instance" "rds_development" {
   password = "${var.rds_development_password}"
   db_subnet_group_name = "${aws_db_subnet_group.rds.name}"
   vpc_security_group_ids = ["${aws_security_group.rds.id}"]
+  backup_retention_period = 30
   publicly_accessible = true
   storage_encrypted = true
 }
