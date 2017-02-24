@@ -5,7 +5,7 @@ jobs:
     - get: pipeline-tasks
     - get: terraform-templates
       trigger: true
-  - task: apply-terraform
+  - task: terraform-apply
     file: pipeline-tasks/terraform-apply.yml
     params:
       TERRAFORM_ACTION: apply
@@ -24,6 +24,24 @@ jobs:
       TF_VAR_rds_production_password: {{rds-production-password}}
       TF_VAR_rds_staging_password: {{rds-staging-password}}
       TF_VAR_rds_development_password: {{rds-development-password}}
+  on_failure:
+    put: slack
+    params:
+      text: |
+        :x: FAILED to deploy FEC infrastructure
+        <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+      channel: {{slack-channel}}
+      username: {{slack-username}}
+      icon_url: {{slack-icon-url}}
+  on_success:
+    put: slack
+    params:
+      text: |
+        :white_check_mark: Successfully deployed FEC infrastructure
+        <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+      channel: {{slack-channel}}
+      username: {{slack-username}}
+      icon_url: {{slack-icon-url}}
 
 resources:
 - name: pipeline-tasks
@@ -37,3 +55,14 @@ resources:
   source:
     uri: https://github.com/18F/fec-infrastructure
     branch: master
+
+- name: slack
+  type: slack-notification
+  source:
+    url: {{slack-webhook-url}}
+
+resource_types:
+- name: slack-notification
+  type: docker-image
+  source:
+    repository: cfcommunity/slack-notification-resource
