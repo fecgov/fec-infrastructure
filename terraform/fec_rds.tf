@@ -14,6 +14,7 @@ provider "aws" {
 
 resource "aws_vpc" "rds" {
   cidr_block = "${var.rds_vpc_cidr_block}"
+  enable_dns_hostnames = true
 }
 
 resource "aws_internet_gateway" "rds" {
