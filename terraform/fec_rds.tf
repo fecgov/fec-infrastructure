@@ -98,6 +98,7 @@ resource "aws_db_instance" "rds_production" {
 resource "aws_db_instance" "rds_production_replica_1" {
   replicate_source_db = "${aws_db_instance.rds_production.identifier}"
   instance_class = "db.r3.2xlarge"
+  storage_encrypted = true
 }
 
 resource "aws_db_instance" "rds_staging" {
@@ -139,6 +140,7 @@ resource "aws_db_instance" "rds_development" {
 resource "aws_db_instance" "rds_development_replica_1" {
   replicate_source_db = "${aws_db_instance.rds_development.identifier}"
   instance_class = "db.r3.2xlarge"
+  storage_encrypted = true
 }
 
 output "rds_production_url" { value = "${aws_db_instance.rds_production.endpoint}" }
