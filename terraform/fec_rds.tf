@@ -14,6 +14,11 @@ provider "aws" {
 
 resource "aws_vpc" "rds" {
   cidr_block = "${var.rds_vpc_cidr_block}"
+  enable_dns_hostnames = true
+}
+
+resource "aws_internet_gateway" "rds" {
+  vpc_id = "${aws_vpc.rds.id}"
 }
 
 resource "aws_subnet" "rds_az1" {
@@ -33,9 +38,28 @@ resource "aws_db_subnet_group" "rds" {
   subnet_ids = ["${aws_subnet.rds_az1.id}", "${aws_subnet.rds_az2.id}"]
 }
 
+resource "aws_route_table" "rds" {
+  vpc_id = "${aws_vpc.rds.id}"
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway.rds.id}"
+  }
+}
+
+resource "aws_route_table_association" "rds_az1" {
+  subnet_id = "${aws_subnet.rds_az1.id}"
+  route_table_id = "${aws_route_table.rds.id}"
+}
+
+resource "aws_route_table_association" "rds_az2" {
+  subnet_id = "${aws_subnet.rds_az2.id}"
+  route_table_id = "${aws_route_table.rds.id}"
+}
+
 /* TODO: Lock down ingress rules */
 resource "aws_security_group" "rds" {
   name = "fec_rds"
+  vpc_id = "${aws_vpc.rds.id}"
 
   ingress {
     from_port = 0
@@ -74,6 +98,7 @@ resource "aws_db_instance" "rds_production" {
 resource "aws_db_instance" "rds_production_replica_1" {
   replicate_source_db = "${aws_db_instance.rds_production.identifier}"
   instance_class = "db.r3.2xlarge"
+  storage_encrypted = true
 }
 
 resource "aws_db_instance" "rds_staging" {
@@ -89,6 +114,7 @@ resource "aws_db_instance" "rds_staging" {
   password = "${var.rds_staging_password}"
   db_subnet_group_name = "${aws_db_subnet_group.rds.name}"
   vpc_security_group_ids = ["${aws_security_group.rds.id}"]
+  backup_retention_period = 30
   publicly_accessible = true
   storage_encrypted = true
 }
@@ -106,6 +132,7 @@ resource "aws_db_instance" "rds_development" {
   password = "${var.rds_development_password}"
   db_subnet_group_name = "${aws_db_subnet_group.rds.name}"
   vpc_security_group_ids = ["${aws_security_group.rds.id}"]
+  backup_retention_period = 30
   publicly_accessible = true
   storage_encrypted = true
 }
@@ -113,6 +140,7 @@ resource "aws_db_instance" "rds_development" {
 resource "aws_db_instance" "rds_development_replica_1" {
   replicate_source_db = "${aws_db_instance.rds_development.identifier}"
   instance_class = "db.r3.2xlarge"
+  storage_encrypted = true
 }
 
 output "rds_production_url" { value = "${aws_db_instance.rds_production.endpoint}" }
