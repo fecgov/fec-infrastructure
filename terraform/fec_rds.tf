@@ -93,6 +93,10 @@ resource "aws_db_instance" "rds_production" {
   publicly_accessible = true
   storage_encrypted = true
   multi_az = true
+  auto_minor_version_upgrade = true
+  storage_type = "io1"
+  identifier = "fec-govcloud-prod"
+  iops = 5000
 }
 
 resource "aws_db_instance" "rds_production_replica_1" {
@@ -100,6 +104,10 @@ resource "aws_db_instance" "rds_production_replica_1" {
   instance_class = "db.r3.2xlarge"
   publicly_accessible = true
   storage_encrypted = true
+  auto_minor_version_upgrade = true
+  storage_type = "io1"
+  identifier = "fec-govcloud-prod-replica-1"
+  iops = 5000
 }
 
 resource "aws_db_instance" "rds_staging" {
@@ -136,6 +144,9 @@ resource "aws_db_instance" "rds_development" {
   backup_retention_period = 30
   publicly_accessible = true
   storage_encrypted = true
+  storage_type = "gp2"
+  auto_minor_version_upgrade = true
+  identifier = "fec-govcloud-dev"
 }
 
 resource "aws_db_instance" "rds_development_replica_1" {
@@ -143,6 +154,9 @@ resource "aws_db_instance" "rds_development_replica_1" {
   instance_class = "db.r3.2xlarge"
   publicly_accessible = true
   storage_encrypted = true
+  storage_type = "gp2"
+  auto_minor_version_upgrade = true
+  identifier = "fec-govcloud-dev-replica-1"
 }
 
 output "rds_production_url" { value = "${aws_db_instance.rds_production.endpoint}" }
