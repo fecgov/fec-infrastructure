@@ -99,7 +99,7 @@ resource "aws_db_instance" "rds_production" {
 }
 
 resource "aws_db_instance" "rds_production_replica_1" {
-  replicate_source_db = "fec-govcloud-prod"
+  replicate_source_db = "${aws_db_instance.rds_production.identifier}"
   instance_class = "db.r3.2xlarge"
   publicly_accessible = true
   storage_encrypted = true
