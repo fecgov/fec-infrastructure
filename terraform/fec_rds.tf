@@ -83,7 +83,7 @@ resource "aws_db_instance" "rds_production" {
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
   allocated_storage = 2000
-  name = "fec"
+  /* name = "fec" */
   username = "fec"
   password = "${var.rds_production_password}"
   db_subnet_group_name = "${aws_db_subnet_group.rds.name}"
@@ -135,7 +135,7 @@ resource "aws_db_instance" "rds_development" {
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
   allocated_storage = 2000
-  name = "fec"
+  /* name = "fec" */
   username = "fec"
   password = "${var.rds_development_password}"
   db_subnet_group_name = "${aws_db_subnet_group.rds.name}"
