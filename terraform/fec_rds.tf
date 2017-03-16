@@ -77,9 +77,8 @@ resource "aws_security_group" "rds" {
 }
 
 resource "aws_db_instance" "rds_production" {
-  lifecycle {
-    prevent_destroy = true
-  }
+  lifecycle {}
+  snapshot_identifier= "aws-us-gov:rds:us-gov-west-1:300842663717:snapshot:rds:tf-20170228215541897853774m75-2017-03-14-12-11"
   engine = "postgres"
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
@@ -129,10 +128,10 @@ resource "aws_db_instance" "rds_staging" {
 }
 
 resource "aws_db_instance" "rds_development" {
-  lifecycle {
-    prevent_destroy = true
-  }
+  lifecycle {}
+
   engine = "postgres"
+  snapshot_identifier= "aws-us-gov:rds:us-gov-west-1:300842663717:snapshot:rds:tf-20170228215541898051554du3-2017-03-14-11-13"
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
   allocated_storage = 2000
