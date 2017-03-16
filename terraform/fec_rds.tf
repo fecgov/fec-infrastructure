@@ -77,9 +77,8 @@ resource "aws_security_group" "rds" {
 }
 
 resource "aws_db_instance" "rds_production" {
-  lifecycle {
-    prevent_destroy = true
-  }
+  lifecycle {}
+  snapshot_identifier= "aws-us-gov:rds:us-gov-west-1:300842663717:snapshot:rds:tf-20170228215541897853774m75-2017-03-14-12-11"
   engine = "postgres"
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
@@ -93,6 +92,10 @@ resource "aws_db_instance" "rds_production" {
   publicly_accessible = true
   storage_encrypted = true
   multi_az = true
+  auto_minor_version_upgrade = true
+  storage_type = "io1"
+  identifier = "fec-govcloud-prod"
+  iops = 5000
 }
 
 resource "aws_db_instance" "rds_production_replica_1" {
@@ -100,6 +103,10 @@ resource "aws_db_instance" "rds_production_replica_1" {
   instance_class = "db.r3.2xlarge"
   publicly_accessible = true
   storage_encrypted = true
+  auto_minor_version_upgrade = true
+  storage_type = "io1"
+  identifier = "fec-govcloud-prod-replica-1"
+  iops = 5000
 }
 
 resource "aws_db_instance" "rds_staging" {
@@ -121,10 +128,10 @@ resource "aws_db_instance" "rds_staging" {
 }
 
 resource "aws_db_instance" "rds_development" {
-  lifecycle {
-    prevent_destroy = true
-  }
+  lifecycle {}
+
   engine = "postgres"
+  snapshot_identifier= "aws-us-gov:rds:us-gov-west-1:300842663717:snapshot:rds:tf-20170228215541898051554du3-2017-03-14-11-13"
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
   allocated_storage = 2000
@@ -136,6 +143,9 @@ resource "aws_db_instance" "rds_development" {
   backup_retention_period = 30
   publicly_accessible = true
   storage_encrypted = true
+  storage_type = "gp2"
+  auto_minor_version_upgrade = true
+  identifier = "fec-govcloud-dev"
 }
 
 resource "aws_db_instance" "rds_development_replica_1" {
@@ -143,6 +153,9 @@ resource "aws_db_instance" "rds_development_replica_1" {
   instance_class = "db.r3.2xlarge"
   publicly_accessible = true
   storage_encrypted = true
+  storage_type = "gp2"
+  auto_minor_version_upgrade = true
+  identifier = "fec-govcloud-dev-replica-1"
 }
 
 output "rds_production_url" { value = "${aws_db_instance.rds_production.endpoint}" }
