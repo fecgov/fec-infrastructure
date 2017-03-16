@@ -78,7 +78,7 @@ resource "aws_security_group" "rds" {
 
 resource "aws_db_instance" "rds_production" {
   lifecycle {}
-  snapshot_identifier= "rds:tf-20170228215541897853774m75-2017-03-14-12-11"
+  snapshot_identifier= "rds:tf-20170223214825431394805grs-2017-03-16-09-02"
   engine = "postgres"
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
@@ -131,7 +131,7 @@ resource "aws_db_instance" "rds_development" {
   lifecycle {}
 
   engine = "postgres"
-  snapshot_identifier= "rds:tf-20170228215541898051554du3-2017-03-14-11-13"
+  snapshot_identifier= "rds:tf-20170223214825431394805grs-2017-03-16-09-02"
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
   allocated_storage = 2000
