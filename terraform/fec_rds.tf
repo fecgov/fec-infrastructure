@@ -113,8 +113,7 @@ resource "aws_db_instance" "rds_production_replica_1" {
 
 resource "aws_db_instance" "rds_staging" {
   lifecycle {}
-  final_snapshot_identifier = "final-staging-magnetic-snapshot-03-17-2017"
-  snapshot_identifier = "final-staging-magnetic-snapshot-03-17-2017"
+  snapshot_identifier = "pre-final-staging-magnetic-snapshot-03-17-2017"
   engine = "postgres"
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
