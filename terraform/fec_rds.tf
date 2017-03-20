@@ -80,6 +80,7 @@ resource "aws_db_instance" "rds_production" {
   lifecycle {
     prevent_destroy = true
   }
+  snapshot_identifier = "rds:tf-20170223214825431394805grs-2017-03-16-09-02"
   engine = "postgres"
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
@@ -135,6 +136,7 @@ resource "aws_db_instance" "rds_development" {
   lifecycle {
     prevent_destroy = true
   }
+  snapshot_identifier = "rds:tf-20170223214825431394805grs-2017-03-16-09-02"
   engine = "postgres"
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
