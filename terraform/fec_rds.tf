@@ -77,8 +77,10 @@ resource "aws_security_group" "rds" {
 }
 
 resource "aws_db_instance" "rds_production" {
-  lifecycle {}
-  snapshot_identifier= "rds:tf-20170223214825431394805grs-2017-03-16-09-02"
+  lifecycle {
+    prevent_destroy = true
+  }
+  snapshot_identifier = "rds:tf-20170223214825431394805grs-2017-03-16-09-02"
   engine = "postgres"
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
@@ -95,7 +97,7 @@ resource "aws_db_instance" "rds_production" {
   auto_minor_version_upgrade = true
   storage_type = "io1"
   identifier = "fec-govcloud-prod"
-  iops = 5000
+  iops = 6000
 }
 
 resource "aws_db_instance" "rds_production_replica_1" {
@@ -106,13 +108,14 @@ resource "aws_db_instance" "rds_production_replica_1" {
   auto_minor_version_upgrade = true
   storage_type = "io1"
   identifier = "fec-govcloud-prod-replica-1"
-  iops = 5000
+  iops = 6000
 }
 
 resource "aws_db_instance" "rds_staging" {
   lifecycle {
     prevent_destroy = true
   }
+  snapshot_identifier = "pre-final-staging-magnetic-snapshot-03-17-2017"
   engine = "postgres"
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
@@ -125,13 +128,17 @@ resource "aws_db_instance" "rds_staging" {
   backup_retention_period = 30
   publicly_accessible = true
   storage_encrypted = true
+  storage_type = "gp2"
+  auto_minor_version_upgrade = true
+  identifier = "fec-govcloud-stage"
 }
 
 resource "aws_db_instance" "rds_development" {
-  lifecycle {}
-
+  lifecycle {
+    prevent_destroy = true
+  }
+  snapshot_identifier = "rds:tf-20170223214825431394805grs-2017-03-16-09-02"
   engine = "postgres"
-  snapshot_identifier= "rds:tf-20170223214825431394805grs-2017-03-16-09-02"
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
   allocated_storage = 2000
