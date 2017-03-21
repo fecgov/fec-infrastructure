@@ -112,13 +112,15 @@ resource "aws_db_instance" "rds_production_replica_1" {
 }
 
 resource "aws_db_instance" "rds_staging" {
-  lifecycle {}
+  lifecycle {
+    prevent_destroy = true
+  }
   snapshot_identifier = "pre-final-staging-magnetic-snapshot-03-17-2017"
   engine = "postgres"
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
   allocated_storage = 2000
-  /* name = "fec" */
+  name = "fec"
   username = "fec"
   password = "${var.rds_staging_password}"
   db_subnet_group_name = "${aws_db_subnet_group.rds.name}"
