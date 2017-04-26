@@ -111,6 +111,17 @@ resource "aws_db_instance" "rds_production_replica_1" {
   iops = 6000
 }
 
+resource "aws_db_instance" "rds_production_replica_2" {
+  replicate_source_db = "${aws_db_instance.rds_production.identifier}"
+  instance_class = "db.r3.2xlarge"
+  publicly_accessible = true
+  storage_encrypted = true
+  auto_minor_version_upgrade = true
+  storage_type = "io1"
+  identifier = "fec-govcloud-prod-replica-2"
+  iops = 6000
+}
+
 resource "aws_db_instance" "rds_staging" {
   lifecycle {
     prevent_destroy = true
