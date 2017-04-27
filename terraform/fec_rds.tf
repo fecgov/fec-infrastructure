@@ -98,6 +98,8 @@ resource "aws_db_instance" "rds_production" {
   storage_type = "io1"
   identifier = "fec-govcloud-prod"
   iops = 12000
+  maintenance_window = "Tue:06:00-Tue:8:00"
+  apply_immediately = true
 }
 
 resource "aws_db_instance" "rds_production_replica_1" {
@@ -109,6 +111,8 @@ resource "aws_db_instance" "rds_production_replica_1" {
   storage_type = "io1"
   identifier = "fec-govcloud-prod-replica-1"
   iops = 12000
+  maintenance_window = "Tue:06:00-Tue:8:00"
+  apply_immediately = true
 }
 
 resource "aws_db_instance" "rds_production_replica_2" {
@@ -120,6 +124,8 @@ resource "aws_db_instance" "rds_production_replica_2" {
   storage_type = "io1"
   identifier = "fec-govcloud-prod-replica-2"
   iops = 12000
+  maintenance_window = "Tue:06:00-Tue:8:00"
+  apply_immediately = true
 }
 
 resource "aws_db_instance" "rds_staging" {
@@ -142,6 +148,8 @@ resource "aws_db_instance" "rds_staging" {
   storage_type = "gp2"
   auto_minor_version_upgrade = true
   identifier = "fec-govcloud-stage"
+  maintenance_window = "Tue:06:00-Tue:8:00"
+  apply_immediately = true
 }
 
 resource "aws_db_instance" "rds_development" {
@@ -164,6 +172,8 @@ resource "aws_db_instance" "rds_development" {
   storage_type = "gp2"
   auto_minor_version_upgrade = true
   identifier = "fec-govcloud-dev"
+  maintenance_window = "Tue:06:00-Tue:8:00"
+  apply_immediately = true
 }
 
 resource "aws_db_instance" "rds_development_replica_1" {
@@ -174,6 +184,8 @@ resource "aws_db_instance" "rds_development_replica_1" {
   storage_type = "gp2"
   auto_minor_version_upgrade = true
   identifier = "fec-govcloud-dev-replica-1"
+  maintenance_window = "Tue:06:00-Tue:8:00"
+  apply_immediately = true
 }
 
 output "rds_production_url" { value = "${aws_db_instance.rds_production.endpoint}" }
