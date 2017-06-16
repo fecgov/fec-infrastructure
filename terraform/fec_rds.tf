@@ -130,7 +130,6 @@ resource "aws_db_instance" "rds_production" {
   identifier = "fec-govcloud-prod"
   iops = 12000
   maintenance_window = "Sat:06:00-Sat:08:00"
-  parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
 }
 
@@ -144,7 +143,6 @@ resource "aws_db_instance" "rds_production_replica_1" {
   identifier = "fec-govcloud-prod-replica-1"
   iops = 12000
   maintenance_window = "Sat:06:00-Sat:08:00"
-  parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
 }
 
@@ -158,7 +156,6 @@ resource "aws_db_instance" "rds_production_replica_2" {
   identifier = "fec-govcloud-prod-replica-2"
   iops = 12000
   maintenance_window = "Sat:06:00-Sat:08:00"
-  parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
 }
 
