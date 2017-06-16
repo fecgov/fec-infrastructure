@@ -76,6 +76,17 @@ resource "aws_security_group" "rds" {
   }
 }
 
+resource "aws_db_parameter_group" "fec_default" {
+    name = "fec_default"
+    family = "postgres9.6"
+    description = "Custom parameters to support FEC"
+
+    parameter {
+        name = "max_parallel_workers_per_gather"
+        value = 4
+    }
+}
+
 resource "aws_db_instance" "rds_production" {
   lifecycle {
     prevent_destroy = true
@@ -99,6 +110,7 @@ resource "aws_db_instance" "rds_production" {
   identifier = "fec-govcloud-prod"
   iops = 12000
   maintenance_window = "Sat:06:00-Sat:08:00"
+  parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
 }
 
@@ -112,6 +124,7 @@ resource "aws_db_instance" "rds_production_replica_1" {
   identifier = "fec-govcloud-prod-replica-1"
   iops = 12000
   maintenance_window = "Sat:06:00-Sat:08:00"
+  parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
 }
 
@@ -125,6 +138,7 @@ resource "aws_db_instance" "rds_production_replica_2" {
   identifier = "fec-govcloud-prod-replica-2"
   iops = 12000
   maintenance_window = "Sat:06:00-Sat:08:00"
+  parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
 }
 
@@ -149,6 +163,7 @@ resource "aws_db_instance" "rds_staging" {
   auto_minor_version_upgrade = true
   identifier = "fec-govcloud-stage"
   maintenance_window = "Sat:06:00-Sat:08:00"
+  parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
 }
 
@@ -173,6 +188,7 @@ resource "aws_db_instance" "rds_development" {
   auto_minor_version_upgrade = true
   identifier = "fec-govcloud-dev"
   maintenance_window = "Sat:06:00-Sat:08:00"
+  parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
 }
 
@@ -185,6 +201,7 @@ resource "aws_db_instance" "rds_development_replica_1" {
   auto_minor_version_upgrade = true
   identifier = "fec-govcloud-dev-replica-1"
   maintenance_window = "Sat:06:00-Sat:08:00"
+  parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
 }
 
