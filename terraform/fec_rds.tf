@@ -76,6 +76,37 @@ resource "aws_security_group" "rds" {
   }
 }
 
+resource "aws_db_parameter_group" "fec_default" {
+    name = "fec_default"
+    family = "postgres9.6"
+    description = "Custom parameters to support FEC"
+
+    parameter {
+        name = "max_parallel_workers_per_gather"
+        value = "4"
+    }
+
+    parameter {
+        name  = "log_connections"
+        value = "1"
+    }
+
+    parameter {
+        name  = "log_disconnections"
+        value = "1"
+    }
+
+    parameter {
+        name  = "log_hostname"
+        value = "0"
+    }
+
+    parameter {
+        name  = "log_statement"
+        value = "ddl"
+    }
+}
+
 resource "aws_db_instance" "rds_production" {
   lifecycle {
     prevent_destroy = true
@@ -149,6 +180,7 @@ resource "aws_db_instance" "rds_staging" {
   auto_minor_version_upgrade = true
   identifier = "fec-govcloud-stage"
   maintenance_window = "Sat:06:00-Sat:08:00"
+  parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
 }
 
@@ -173,6 +205,7 @@ resource "aws_db_instance" "rds_development" {
   auto_minor_version_upgrade = true
   identifier = "fec-govcloud-dev"
   maintenance_window = "Sat:06:00-Sat:08:00"
+  parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
 }
 
@@ -185,6 +218,7 @@ resource "aws_db_instance" "rds_development_replica_1" {
   auto_minor_version_upgrade = true
   identifier = "fec-govcloud-dev-replica-1"
   maintenance_window = "Sat:06:00-Sat:08:00"
+  parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
 }
 
