@@ -77,7 +77,7 @@ resource "aws_security_group" "rds" {
 }
 
 resource "aws_db_parameter_group" "fec_default" {
-    name = "fec_default"
+    name = "fec-default"
     family = "postgres9.6"
     description = "Custom parameters to support FEC"
 
