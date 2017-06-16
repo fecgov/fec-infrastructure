@@ -83,7 +83,27 @@ resource "aws_db_parameter_group" "fec_default" {
 
     parameter {
         name = "max_parallel_workers_per_gather"
-        value = 4
+        value = "4"
+    }
+
+    parameter {
+        name  = "log_connections"
+        value = "1"
+    }
+
+    parameter {
+        name  = "log_disconnections"
+        value = "1"
+    }
+
+    parameter {
+        name  = "log_hostname"
+        value = "0"
+    }
+
+    parameter {
+        name  = "log_statement"
+        value = "ddl"
     }
 }
 
