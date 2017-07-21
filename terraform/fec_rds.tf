@@ -8,6 +8,10 @@ variable "rds_production_password" {}
 variable "rds_staging_password" {}
 variable "rds_development_password" {}
 
+terraform {
+  backend "s3" {}
+}
+
 provider "aws" {
   region = "${var.region}"
 }
