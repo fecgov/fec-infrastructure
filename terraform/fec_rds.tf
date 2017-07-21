@@ -105,6 +105,11 @@ resource "aws_db_parameter_group" "fec_default" {
         name  = "log_statement"
         value = "ddl"
     }
+
+    parameter {
+        name  = "max_standby_streaming_delay" # This has no effect on masters, it only affects slaves
+        value = "1 h"
+    }
 }
 
 resource "aws_db_instance" "rds_production" {
