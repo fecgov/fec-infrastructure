@@ -112,7 +112,12 @@ resource "aws_db_parameter_group" "fec_default" {
 
     parameter {
         name  = "max_standby_streaming_delay" # This has no effect on masters, it only affects slaves
-        value = "3600000"
+        value = "1200000" # in mS
+    }
+
+    parameter {
+        name  = "work_mem"
+        value = "8192" # in kB
     }
 }
 
