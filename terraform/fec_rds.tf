@@ -182,7 +182,7 @@ resource "aws_db_instance" "rds_production" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  monitoring_role_arn = "${aws_iam_role.aws_iam_role.arn}"
+  monitoring_role_arn = "${aws_iam_role.monitoring_role.arn}"
 }
 
 resource "aws_db_instance" "rds_production_replica_1" {
@@ -197,7 +197,7 @@ resource "aws_db_instance" "rds_production_replica_1" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  monitoring_role_arn = "${aws_iam_role.aws_iam_role.arn}"
+  monitoring_role_arn = "${aws_iam_role.monitoring_role.arn}"
 }
 
 resource "aws_db_instance" "rds_production_replica_2" {
@@ -212,7 +212,7 @@ resource "aws_db_instance" "rds_production_replica_2" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  monitoring_role_arn = "${aws_iam_role.aws_iam_role.arn}"
+  monitoring_role_arn = "${aws_iam_role.monitoring_role.arn}"
 }
 
 resource "aws_db_instance" "rds_staging" {
@@ -238,7 +238,7 @@ resource "aws_db_instance" "rds_staging" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  monitoring_role_arn = "${aws_iam_role.aws_iam_role.arn}"
+  monitoring_role_arn = "${aws_iam_role.monitoring_role.arn}"
 }
 
 resource "aws_db_instance" "rds_development" {
@@ -264,7 +264,7 @@ resource "aws_db_instance" "rds_development" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  monitoring_role_arn = "${aws_iam_role.aws_iam_role.arn}"
+  monitoring_role_arn = "${aws_iam_role.monitoring_role.arn}"
 }
 
 resource "aws_db_instance" "rds_development_replica_1" {
@@ -278,7 +278,7 @@ resource "aws_db_instance" "rds_development_replica_1" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  monitoring_role_arn = "${aws_iam_role.aws_iam_role.arn}"
+  monitoring_role_arn = "${aws_iam_role.monitoring_role.arn}"
 }
 
 output "rds_production_url" { value = "${aws_db_instance.rds_production.endpoint}" }
