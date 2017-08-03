@@ -16,40 +16,59 @@ provider "aws" {
   region = "${var.region}"
 }
 
-resource "aws_iam_role" "monitoring_role" {
-  name = "AmazonRDSEnhancedMonitoringRoleTF"
-
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "EnableCreationAndManagementOfRDSCloudwatchLogGroups",
-            "Effect": "Allow",
-            "Action": [
-                "logs:CreateLogGroup",
-                "logs:PutRetentionPolicy"
-            ],
-            "Resource": [
-                "arn:aws-us-gov:logs:*:*:log-group:RDS*"
-            ]
-        },
-        {
-            "Sid": "EnableCreationAndManagementOfRDSCloudwatchLogStreams",
-            "Effect": "Allow",
-            "Action": [
-                "logs:CreateLogStream",
-                "logs:PutLogEvents",
-                "logs:DescribeLogStreams",
-                "logs:GetLogEvents"
-            ],
-            "Resource": [
-                "arn:aws-us-gov:logs:*:*:log-group:RDS*:log-stream:*"
-            ]
-        }
-    ]
+# logging role
+aws_iam_role_policy = <<EOF
+  {
+    "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Sid": "EnableCreationAndManagementOfRDSCloudwatchLogGroups",
+              "Effect": "Allow",
+              "Action": [
+                  "logs:CreateLogGroup",
+                  "logs:PutRetentionPolicy"
+              ],
+              "Resource": [
+                  "arn:aws-us-gov:logs:*:*:log-group:RDS*"
+              ]
+          },
+          {
+              "Sid": "EnableCreationAndManagementOfRDSCloudwatchLogStreams",
+              "Effect": "Allow",
+              "Action": [
+                  "logs:CreateLogStream",
+                  "logs:PutLogEvents",
+                  "logs:DescribeLogStreams",
+                  "logs:GetLogEvents"
+              ],
+              "Resource": [
+                  "arn:aws-us-gov:logs:*:*:log-group:RDS*:log-stream:*"
+              ]
+          }
+      ]
+  }
+  EOF
 }
-EOF
+
+resource "aws_iam_role" "monitoring_policy" {
+  name = "AmazonRDSEnhancedMonitoringPolicyTF"
+  role = "${aws_iam_role_policy.id}"
+  policy = {
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents",
+        "logs:DescribeLogStreams"
+      ],
+      "Resource": [
+        "arn:aws:logs:*:*:*"
+      ]
+   }
+  ]
 }
 
 resource "aws_vpc" "rds" {
