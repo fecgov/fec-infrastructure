@@ -26,17 +26,13 @@ resource "aws_iam_role_policy" "test_policy" {
   "Version": "2012-10-17",
   "Statement": [
     {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
       "Effect": "Allow",
-      "Action": [
-        "logs:CreateLogGroup",
-        "logs:CreateLogStream",
-        "logs:PutLogEvents",
-        "logs:DescribeLogStreams"
-      ],
-      "Resource": [
-        "arn:aws:logs:*:*:*"
-      ]
-   }
+      "Sid": ""
+    }
   ]
 }
 EOF
@@ -57,7 +53,7 @@ resource "aws_iam_role" "test_role" {
                   "logs:PutRetentionPolicy"
               ],
               "Resource": [
-                  "arn:aws-us-gov:logs:*:*:log-group:RDS*"
+                  "arn:aws-us-gov:logs:*:*:*"
               ]
           },
           {
