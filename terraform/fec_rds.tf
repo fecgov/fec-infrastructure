@@ -22,35 +22,35 @@ resource "aws_iam_role_policy" "test_policy" {
   role = "${aws_iam_role.rds_logs_role.id}"
 
   policy = <<EOF
-  {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "EnableCreationAndManagementOfRDSCloudwatchLogGroups",
-            "Effect": "Allow",
-            "Action": [
-                "logs:CreateLogGroup",
-                "logs:PutRetentionPolicy"
-            ],
-            "Resource": [
-                "arn:aws-us-gov:logs:*:*:log-group:RDS*"
-            ]
-        },
-        {
-            "Sid": "EnableCreationAndManagementOfRDSCloudwatchLogStreams",
-            "Effect": "Allow",
-            "Action": [
-                "logs:CreateLogStream",
-                "logs:PutLogEvents",
-                "logs:DescribeLogStreams",
-                "logs:GetLogEvents"
-            ],
-            "Resource": [
-                "arn:aws-us-gov:logs:*:*:log-group:RDS*:log-stream:*"
-            ]
-        }
-    ]
-  }
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "EnableCreationAndManagementOfRDSCloudwatchLogGroups",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:PutRetentionPolicy"
+      ],
+      "Resource": [
+        "arn:aws-us-gov:logs:*:*:log-group:RDS*"
+      ]
+    },
+    {
+      "Sid": "EnableCreationAndManagementOfRDSCloudwatchLogStreams",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents",
+        "logs:DescribeLogStreams",
+        "logs:GetLogEvents"
+      ],
+      "Resource": [
+        "arn:aws-us-gov:logs:*:*:log-group:RDS*:log-stream:*"
+      ]
+    }
+  ]
+}
 EOF
 }
 
@@ -58,20 +58,20 @@ resource "aws_iam_role" "rds_logs_role" {
   name = "rds_logs_role"
 
   assume_role_policy = <<EOF
-  {
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Action": "sts:AssumeRole",
-        "Principal": {
-          "Service": "ec2.amazonaws.com"
-        },
-        "Effect": "Allow",
-        "Sid": ""
-      }
-    ]
-  }
-  EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
 }
 
 resource "aws_vpc" "rds" {
