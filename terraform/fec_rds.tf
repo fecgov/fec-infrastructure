@@ -80,11 +80,11 @@ EOF
 
 /* RDS Logging Policy Attachment */
 resource "aws_iam_policy_attachment" "rds_logs_policy_attachment" {
-  name = "enhanced-monitoring-attachment"
+  name = "rds_logs_policy_attachment"
+  depends_on = ["aws_iam_role.rds_logs_role"]
   roles = [
     "${aws_iam_role.rds_logs_role.name}",
   ]
-  depends_on = ["aws_iam_role.rds_logs_role"]
 
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonRDSEnhancedMonitoringRole"
 }
