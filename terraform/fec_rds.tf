@@ -19,43 +19,43 @@ provider "aws" {
 # logging role
 resource "aws_iam_role_policy" "test_policy" {
   name = "test_policy"
-  role = "${aws_iam_role.test_role.id}"
+  role = "${aws_iam_role.rds_logs_role.id}"
 
   policy = <<EOF
   {
     "Version": "2012-10-17",
-      "Statement": [
-          {
-              "Sid": "EnableCreationAndManagementOfRDSCloudwatchLogGroups",
-              "Effect": "Allow",
-              "Action": [
-                  "logs:CreateLogGroup",
-                  "logs:PutRetentionPolicy"
-              ],
-              "Resource": [
-                  "arn:aws-us-gov:logs:*:*:*"
-              ]
-          },
-          {
-              "Sid": "EnableCreationAndManagementOfRDSCloudwatchLogStreams",
-              "Effect": "Allow",
-              "Action": [
-                  "logs:CreateLogStream",
-                  "logs:PutLogEvents",
-                  "logs:DescribeLogStreams",
-                  "logs:GetLogEvents"
-              ],
-              "Resource": [
-                  "arn:aws-us-gov:logs:*:*:log-group:RDS*:log-stream:*"
-              ]
-          }
-      ]
+    "Statement": [
+        {
+            "Sid": "EnableCreationAndManagementOfRDSCloudwatchLogGroups",
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:PutRetentionPolicy"
+            ],
+            "Resource": [
+                "arn:aws-us-gov:logs:*:*:log-group:RDS*"
+            ]
+        },
+        {
+            "Sid": "EnableCreationAndManagementOfRDSCloudwatchLogStreams",
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+                "logs:DescribeLogStreams",
+                "logs:GetLogEvents"
+            ],
+            "Resource": [
+                "arn:aws-us-gov:logs:*:*:log-group:RDS*:log-stream:*"
+            ]
+        }
+    ]
   }
 EOF
 }
 
-resource "aws_iam_role" "test_role" {
-  name = "test_role"
+resource "aws_iam_role" "rds_logs_role" {
+  name = "rds_logs_role"
 
   assume_role_policy = <<EOF
   {
@@ -204,7 +204,7 @@ resource "aws_db_instance" "rds_production" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  test_role_arn = "${aws_iam_role.test_role.arn}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
 }
 
 resource "aws_db_instance" "rds_production_replica_1" {
@@ -219,7 +219,7 @@ resource "aws_db_instance" "rds_production_replica_1" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  test_role_arn = "${aws_iam_role.test_role.arn}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
 }
 
 resource "aws_db_instance" "rds_production_replica_2" {
@@ -234,7 +234,7 @@ resource "aws_db_instance" "rds_production_replica_2" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  test_role_arn = "${aws_iam_role.test_role.arn}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
 }
 
 resource "aws_db_instance" "rds_staging" {
@@ -260,7 +260,7 @@ resource "aws_db_instance" "rds_staging" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  test_role_arn = "${aws_iam_role.test_role.arn}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
 }
 
 resource "aws_db_instance" "rds_development" {
@@ -286,7 +286,7 @@ resource "aws_db_instance" "rds_development" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  test_role_arn = "${aws_iam_role.test_role.arn}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
 }
 
 resource "aws_db_instance" "rds_development_replica_1" {
@@ -300,7 +300,7 @@ resource "aws_db_instance" "rds_development_replica_1" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  test_role_arn = "${aws_iam_role.test_role.arn}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
 }
 
 output "rds_production_url" { value = "${aws_db_instance.rds_production.endpoint}" }
