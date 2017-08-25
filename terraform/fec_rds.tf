@@ -206,6 +206,7 @@ resource "aws_db_instance" "rds_production" {
   apply_immediately = true
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.id}"
   monitoring_interval = 5
+  iam_database_authentication_enabled = true
 }
 
 resource "aws_db_instance" "rds_production_replica_1" {
@@ -222,6 +223,7 @@ resource "aws_db_instance" "rds_production_replica_1" {
   apply_immediately = true
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.id}"
   monitoring_interval = 5
+  iam_database_authentication_enabled = true
 }
 
 resource "aws_db_instance" "rds_production_replica_2" {
@@ -238,6 +240,7 @@ resource "aws_db_instance" "rds_production_replica_2" {
   apply_immediately = true
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.id}"
   monitoring_interval = 5
+  iam_database_authentication_enabled = true
 }
 
 resource "aws_db_instance" "rds_staging" {
@@ -265,6 +268,7 @@ resource "aws_db_instance" "rds_staging" {
   apply_immediately = true
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.id}"
   monitoring_interval = 5
+  iam_database_authentication_enabled = true
 }
 
 resource "aws_db_instance" "rds_development" {
@@ -292,6 +296,7 @@ resource "aws_db_instance" "rds_development" {
   apply_immediately = true
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.id}"
   monitoring_interval = 5
+  iam_database_authentication_enabled = true
 }
 
 resource "aws_db_instance" "rds_development_replica_1" {
@@ -307,6 +312,7 @@ resource "aws_db_instance" "rds_development_replica_1" {
   apply_immediately = true
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.id}"
   monitoring_interval = 5
+  iam_database_authentication_enabled = true
 }
 
 output "rds_production_url" { value = "${aws_db_instance.rds_production.endpoint}" }
