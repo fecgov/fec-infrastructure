@@ -205,6 +205,7 @@ resource "aws_db_instance" "rds_production" {
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
+  monitoring_interval = 5
 }
 
 resource "aws_db_instance" "rds_production_replica_1" {
@@ -220,6 +221,7 @@ resource "aws_db_instance" "rds_production_replica_1" {
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
+  monitoring_interval = 5
 }
 
 resource "aws_db_instance" "rds_production_replica_2" {
@@ -235,6 +237,7 @@ resource "aws_db_instance" "rds_production_replica_2" {
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
+  monitoring_interval = 5
 }
 
 resource "aws_db_instance" "rds_staging" {
@@ -261,6 +264,7 @@ resource "aws_db_instance" "rds_staging" {
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
+  monitoring_interval = 5
 }
 
 resource "aws_db_instance" "rds_development" {
@@ -287,6 +291,7 @@ resource "aws_db_instance" "rds_development" {
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
+  monitoring_interval = 5
 }
 
 resource "aws_db_instance" "rds_development_replica_1" {
@@ -301,6 +306,7 @@ resource "aws_db_instance" "rds_development_replica_1" {
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
+  monitoring_interval = 5
 }
 
 output "rds_production_url" { value = "${aws_db_instance.rds_production.endpoint}" }
