@@ -41,9 +41,7 @@ EOF
 resource "aws_iam_role_policy" "rds_logs_policy" {
   depends_on = ["aws_iam_role.rds_logs_role"]
   name = "rds_logs_policy"
-  roles = [
-    "${aws_iam_role.rds_logs_role.name}",
-  ]
+  role = "${aws_iam_role.rds_logs_role.name}"
 
   policy = <<EOF
 {
