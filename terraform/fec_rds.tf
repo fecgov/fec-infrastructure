@@ -205,6 +205,8 @@ resource "aws_db_instance" "rds_production" {
   iops = 12000
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
+  monitoring_interval = 5
   apply_immediately = true
 }
 
@@ -219,6 +221,8 @@ resource "aws_db_instance" "rds_production_replica_1" {
   iops = 12000
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
+  monitoring_interval = 5
   apply_immediately = true
 }
 
@@ -233,6 +237,8 @@ resource "aws_db_instance" "rds_production_replica_2" {
   iops = 12000
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
+  monitoring_interval = 5
   apply_immediately = true
 }
 
@@ -258,6 +264,8 @@ resource "aws_db_instance" "rds_staging" {
   identifier = "fec-govcloud-stage"
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
+  monitoring_interval = 5
   apply_immediately = true
 }
 
@@ -283,6 +291,8 @@ resource "aws_db_instance" "rds_development" {
   identifier = "fec-govcloud-dev"
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
+  monitoring_interval = 5
   apply_immediately = true
 }
 
@@ -296,6 +306,8 @@ resource "aws_db_instance" "rds_development_replica_1" {
   identifier = "fec-govcloud-dev-replica-1"
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
+  monitoring_interval = 5
   apply_immediately = true
 }
 
