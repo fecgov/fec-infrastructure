@@ -16,10 +16,34 @@ provider "aws" {
   region = "${var.region}"
 }
 
-# logging role
-resource "aws_iam_role_policy" "test_policy" {
-  name = "test_policy"
-  role = "${aws_iam_role.rds_logs_role.id}"
+/* RDS Logging Role */
+resource "aws_iam_role" "rds_logs_role" {
+  name = "rds_logs_role"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "monitoring.rds.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+/* RDS Logging Policy */
+resource "aws_iam_role_policy" "rds_logs_policy" {
+  depends_on = ["aws_iam_role.rds_logs_role"]
+  name = "rds_logs_policy"
+  roles = [
+    "${aws_iam_role.rds_logs_role.name}",
+  ]
 
   policy = <<EOF
 {
@@ -54,24 +78,15 @@ resource "aws_iam_role_policy" "test_policy" {
 EOF
 }
 
-resource "aws_iam_role" "rds_logs_role" {
-  name = "rds_logs_role"
-
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
+/* RDS Logging Policy Attachment */
+resource "aws_iam_policy_attachment" "rds_logs_policy_attachment" {
+  name = "rds_logs_policy_attachment"
+  depends_on = ["aws_iam_role.rds_logs_role"]
+  roles = [
+    "${aws_iam_role.rds_logs_role.name}",
   ]
-}
-EOF
+
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonRDSEnhancedMonitoringRole"
 }
 
 resource "aws_vpc" "rds" {
@@ -204,9 +219,10 @@ resource "aws_db_instance" "rds_production" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  monitoring_role_arn = "${aws_iam_role.rds_logs_role.id}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
   iam_database_authentication_enabled = true
+  depends_on = ["aws_iam_policy_attachment.rds_logs_policy_attachment"]
 }
 
 resource "aws_db_instance" "rds_production_replica_1" {
@@ -221,9 +237,10 @@ resource "aws_db_instance" "rds_production_replica_1" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  monitoring_role_arn = "${aws_iam_role.rds_logs_role.id}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
   iam_database_authentication_enabled = true
+  depends_on = ["aws_iam_policy_attachment.rds_logs_policy_attachment"]
 }
 
 resource "aws_db_instance" "rds_production_replica_2" {
@@ -238,9 +255,10 @@ resource "aws_db_instance" "rds_production_replica_2" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  monitoring_role_arn = "${aws_iam_role.rds_logs_role.id}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
   iam_database_authentication_enabled = true
+  depends_on = ["aws_iam_policy_attachment.rds_logs_policy_attachment"]
 }
 
 resource "aws_db_instance" "rds_staging" {
@@ -266,9 +284,10 @@ resource "aws_db_instance" "rds_staging" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  monitoring_role_arn = "${aws_iam_role.rds_logs_role.id}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
   iam_database_authentication_enabled = true
+  depends_on = ["aws_iam_policy_attachment.rds_logs_policy_attachment"]
 }
 
 resource "aws_db_instance" "rds_development" {
@@ -294,9 +313,10 @@ resource "aws_db_instance" "rds_development" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  monitoring_role_arn = "${aws_iam_role.rds_logs_role.id}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
   iam_database_authentication_enabled = true
+  depends_on = ["aws_iam_policy_attachment.rds_logs_policy_attachment"]
 }
 
 resource "aws_db_instance" "rds_development_replica_1" {
@@ -310,9 +330,10 @@ resource "aws_db_instance" "rds_development_replica_1" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  monitoring_role_arn = "${aws_iam_role.rds_logs_role.id}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
   iam_database_authentication_enabled = true
+  depends_on = ["aws_iam_policy_attachment.rds_logs_policy_attachment"]
 }
 
 output "rds_production_url" { value = "${aws_db_instance.rds_production.endpoint}" }
