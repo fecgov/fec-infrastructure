@@ -204,7 +204,7 @@ resource "aws_db_instance" "rds_production" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.id}"
   monitoring_interval = 5
 }
 
@@ -220,7 +220,7 @@ resource "aws_db_instance" "rds_production_replica_1" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.id}"
   monitoring_interval = 5
 }
 
@@ -236,7 +236,7 @@ resource "aws_db_instance" "rds_production_replica_2" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.id}"
   monitoring_interval = 5
 }
 
@@ -263,7 +263,7 @@ resource "aws_db_instance" "rds_staging" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.id}"
   monitoring_interval = 5
 }
 
@@ -290,7 +290,7 @@ resource "aws_db_instance" "rds_development" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.id}"
   monitoring_interval = 5
 }
 
@@ -305,7 +305,7 @@ resource "aws_db_instance" "rds_development_replica_1" {
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   apply_immediately = true
-  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
+  monitoring_role_arn = "${aws_iam_role.rds_logs_role.id}"
   monitoring_interval = 5
 }
 
