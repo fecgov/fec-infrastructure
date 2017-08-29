@@ -80,66 +80,6 @@ resource "aws_security_group" "rds" {
   }
 }
 
-/* RDS Logging Role */
-resource "aws_iam_role" "rds_logs_role" {
-  name = "rds_logs_role"
-
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "monitoring.rds.amazonaws.com"
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
-  ]
-}
-EOF
-}
-
-/* RDS Logging Policy */
-resource "aws_iam_role_policy" "rds_logs_policy" {
-  depends_on = ["aws_iam_role.rds_logs_role"]
-  name = "rds_logs_policy"
-  role = "${aws_iam_role.rds_logs_role.name}"
-
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "EnableCreationAndManagementOfRDSCloudwatchLogGroups",
-      "Effect": "Allow",
-      "Action": [
-        "logs:CreateLogGroup",
-        "logs:PutRetentionPolicy"
-      ],
-      "Resource": [
-        "arn:aws-us-gov:logs:*:*:log-group:RDS*"
-      ]
-    },
-    {
-      "Sid": "EnableCreationAndManagementOfRDSCloudwatchLogStreams",
-      "Effect": "Allow",
-      "Action": [
-        "logs:CreateLogStream",
-        "logs:PutLogEvents",
-        "logs:DescribeLogStreams",
-        "logs:GetLogEvents"
-      ],
-      "Resource": [
-        "arn:aws-us-gov:logs:*:*:log-group:RDS*:log-stream:*"
-      ]
-    }
-  ]
-}
-EOF
-}
-
 resource "aws_db_parameter_group" "fec_default" {
     name = "fec-default"
     family = "postgres9.6"
@@ -205,8 +145,6 @@ resource "aws_db_instance" "rds_production" {
   iops = 12000
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
-  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
-  monitoring_interval = 5
   apply_immediately = true
 }
 
@@ -221,8 +159,6 @@ resource "aws_db_instance" "rds_production_replica_1" {
   iops = 12000
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
-  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
-  monitoring_interval = 5
   apply_immediately = true
 }
 
@@ -237,8 +173,6 @@ resource "aws_db_instance" "rds_production_replica_2" {
   iops = 12000
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
-  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
-  monitoring_interval = 5
   apply_immediately = true
 }
 
@@ -264,8 +198,6 @@ resource "aws_db_instance" "rds_staging" {
   identifier = "fec-govcloud-stage"
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
-  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
-  monitoring_interval = 5
   apply_immediately = true
 }
 
@@ -291,8 +223,6 @@ resource "aws_db_instance" "rds_development" {
   identifier = "fec-govcloud-dev"
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
-  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
-  monitoring_interval = 5
   apply_immediately = true
 }
 
@@ -306,8 +236,6 @@ resource "aws_db_instance" "rds_development_replica_1" {
   identifier = "fec-govcloud-dev-replica-1"
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
-  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
-  monitoring_interval = 5
   apply_immediately = true
 }
 
