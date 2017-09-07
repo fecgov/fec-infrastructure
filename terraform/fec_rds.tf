@@ -117,7 +117,12 @@ resource "aws_db_parameter_group" "fec_default" {
 
     parameter {
         name  = "work_mem"
-        value = "8192" # in kB
+        value = "65536" # in kB - 64MB
+    }
+
+    parameter {
+        name  = "checkpoint_timeout"
+        value = "900" # in seconds - 15 minutes
     }
 }
 
