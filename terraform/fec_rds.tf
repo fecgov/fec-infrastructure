@@ -111,6 +111,11 @@ resource "aws_db_parameter_group" "fec_default" {
     }
 
     parameter {
+        name  = "log_min_duration_statement"
+        value = "1000" # in ms - 1s
+    }
+
+    parameter {
         name  = "max_standby_streaming_delay" # This has no effect on masters, it only affects slaves
         value = "1200000" # in mS
     }
