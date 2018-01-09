@@ -9,7 +9,11 @@ variable "rds_staging_password" {}
 variable "rds_development_password" {}
 
 terraform {
-  backend "s3" {}
+  backend "s3" {
+    bucket = "tts-fec"
+    encrypt=true
+    key="fec/terraform.tfstate"
+  }
 }
 
 provider "aws" {
