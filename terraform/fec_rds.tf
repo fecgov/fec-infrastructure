@@ -221,6 +221,9 @@ resource "aws_db_instance" "rds_production" {
 }
 
 resource "aws_db_instance" "rds_production_replica_1" {
+  lifecycle {
+    prevent_destroy = true
+  }
   replicate_source_db = "${aws_db_instance.rds_production.identifier}"
   instance_class = "db.r3.2xlarge"
   publicly_accessible = true
@@ -237,6 +240,9 @@ resource "aws_db_instance" "rds_production_replica_1" {
 }
 
 resource "aws_db_instance" "rds_production_replica_2" {
+  lifecycle {
+    prevent_destroy = true
+  }
   replicate_source_db = "${aws_db_instance.rds_production.identifier}"
   instance_class = "db.r3.2xlarge"
   publicly_accessible = true
