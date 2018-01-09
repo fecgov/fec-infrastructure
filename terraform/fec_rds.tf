@@ -9,7 +9,11 @@ variable "rds_staging_password" {}
 variable "rds_development_password" {}
 
 terraform {
-  backend "s3" {}
+  backend "s3" {
+    bucket = "tts-fec"
+    encrypt=true
+    key="fec/terraform.tfstate"
+  }
 }
 
 provider "aws" {
@@ -221,6 +225,9 @@ resource "aws_db_instance" "rds_production" {
 }
 
 resource "aws_db_instance" "rds_production_replica_1" {
+  lifecycle {
+    prevent_destroy = true
+  }
   replicate_source_db = "${aws_db_instance.rds_production.identifier}"
   instance_class = "db.r3.2xlarge"
   publicly_accessible = true
@@ -237,6 +244,9 @@ resource "aws_db_instance" "rds_production_replica_1" {
 }
 
 resource "aws_db_instance" "rds_production_replica_2" {
+  lifecycle {
+    prevent_destroy = true
+  }
   replicate_source_db = "${aws_db_instance.rds_production.identifier}"
   instance_class = "db.r3.2xlarge"
   publicly_accessible = true
@@ -320,14 +330,3 @@ resource "aws_db_instance" "rds_development_replica_1" {
   monitoring_interval = 5
   apply_immediately = true
 }
-
-output "rds_production_url" { value = "${aws_db_instance.rds_production.endpoint}" }
-output "rds_production_password" { value = "${aws_db_instance.rds_production.password}" }
-output "rds_production_replica_1_url" { value = "${aws_db_instance.rds_production_replica_1.endpoint}" }
-
-output "rds_staging_url" { value = "${aws_db_instance.rds_staging.endpoint}" }
-output "rds_staging_password" { value = "${aws_db_instance.rds_staging.password}" }
-
-output "rds_development_url" { value = "${aws_db_instance.rds_development.endpoint}" }
-output "rds_development_password" { value = "${aws_db_instance.rds_development.password}" }
-output "rds_development_replica_1_url" { value = "${aws_db_instance.rds_development_replica_1.endpoint}" }
