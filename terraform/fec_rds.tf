@@ -330,13 +330,3 @@ resource "aws_db_instance" "rds_development_replica_1" {
   monitoring_interval = 5
   apply_immediately = true
 }
-
-output "rds_production_url" { value = "${aws_db_instance.rds_production.endpoint}" }
-
-output "rds_production_replica_1_url" { value = "${aws_db_instance.rds_production_replica_1.endpoint}" }
-
-output "rds_staging_url" { value = "${aws_db_instance.rds_staging.endpoint}" }
-
-output "rds_development_url" { value = "${aws_db_instance.rds_development.endpoint}" }
-
-output "rds_development_replica_1_url" { value = "${aws_db_instance.rds_development_replica_1.endpoint}" }
