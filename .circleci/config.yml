@@ -26,8 +26,7 @@ jobs:
 
       - run:
           name: Deploy the full environment
-          # don't merge this
-          command: terraform plan terraform # -input=false -auto-approve terraform
+          command: terraform apply -input=false -auto-approve terraform
 
 workflows:
   version: 2
