@@ -216,7 +216,7 @@ resource "aws_db_instance" "rds_production" {
   auto_minor_version_upgrade = true
   storage_type = "io1"
   identifier = "fec-govcloud-prod"
-  iops = 12000
+  iops = 12100
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
@@ -235,7 +235,7 @@ resource "aws_db_instance" "rds_production_replica_1" {
   auto_minor_version_upgrade = true
   storage_type = "io1"
   identifier = "fec-govcloud-prod-replica-1"
-  iops = 12000
+  iops = 12100
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
@@ -254,7 +254,7 @@ resource "aws_db_instance" "rds_production_replica_2" {
   auto_minor_version_upgrade = true
   storage_type = "io1"
   identifier = "fec-govcloud-prod-replica-2"
-  iops = 12000
+  iops = 12100
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
