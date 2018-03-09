@@ -7,5 +7,5 @@ Terraform configuration and CircleCI for managing custom FEC infrastructure in A
 * Terraform configuration is deployed via CircleCI to the FEC's AWS account
 
 ## Workflow
-* FEC team member sends a pull request to 18F/fec-infrastructure
+* FEC team member sends a pull request to fecgov/fec-infrastructure
 * After pull request is merged, updates are automatically deployed via CircleCI
