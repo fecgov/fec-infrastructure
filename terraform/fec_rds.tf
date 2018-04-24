@@ -4,9 +4,6 @@ variable "rds_az2" { default = "us-gov-west-1b" }
 variable "rds_vpc_cidr_block" {}
 variable "rds_cidr_block_az1" {}
 variable "rds_cidr_block_az2" {}
-variable "rds_production_password" {}
-variable "rds_staging_password" {}
-variable "rds_development_password" {}
 
 terraform {
   backend "s3" {
@@ -206,7 +203,6 @@ resource "aws_db_instance" "rds_production" {
   allocated_storage = 2000
   name = "fec"
   username = "fec"
-  password = "${var.rds_production_password}"
   db_subnet_group_name = "${aws_db_subnet_group.rds.name}"
   vpc_security_group_ids = ["${aws_security_group.rds.id}"]
   backup_retention_period = 30
@@ -273,7 +269,6 @@ resource "aws_db_instance" "rds_staging" {
   allocated_storage = 2000
   name = "fec"
   username = "fec"
-  password = "${var.rds_staging_password}"
   db_subnet_group_name = "${aws_db_subnet_group.rds.name}"
   vpc_security_group_ids = ["${aws_security_group.rds.id}"]
   backup_retention_period = 30
@@ -300,7 +295,6 @@ resource "aws_db_instance" "rds_development" {
   allocated_storage = 2000
   name = "fec"
   username = "fec"
-  password = "${var.rds_development_password}"
   db_subnet_group_name = "${aws_db_subnet_group.rds.name}"
   vpc_security_group_ids = ["${aws_security_group.rds.id}"]
   backup_retention_period = 30
