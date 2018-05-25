@@ -297,7 +297,7 @@ resource "aws_db_instance" "rds_development" {
   engine = "postgres"
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
-  allocated_storage = 2000
+  allocated_storage = 2200
   name = "fec"
   username = "fec"
   password = "${var.rds_development_password}"
