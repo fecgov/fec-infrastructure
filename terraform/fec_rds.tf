@@ -230,6 +230,7 @@ resource "aws_db_instance" "rds_production_replica_1" {
   }
   replicate_source_db = "${aws_db_instance.rds_production.identifier}"
   instance_class = "db.r3.2xlarge"
+  allocated_storage = 2200
   publicly_accessible = true
   storage_encrypted = true
   auto_minor_version_upgrade = true
@@ -249,6 +250,7 @@ resource "aws_db_instance" "rds_production_replica_2" {
   }
   replicate_source_db = "${aws_db_instance.rds_production.identifier}"
   instance_class = "db.r3.2xlarge"
+  allocated_storage = 2200
   publicly_accessible = true
   storage_encrypted = true
   auto_minor_version_upgrade = true
@@ -319,6 +321,7 @@ resource "aws_db_instance" "rds_development" {
 resource "aws_db_instance" "rds_development_replica_1" {
   replicate_source_db = "${aws_db_instance.rds_development.identifier}"
   instance_class = "db.r3.2xlarge"
+  allocated_storage = 2200
   publicly_accessible = true
   storage_encrypted = true
   storage_type = "gp2"
