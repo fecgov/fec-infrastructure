@@ -203,7 +203,7 @@ resource "aws_db_instance" "rds_production" {
   engine = "postgres"
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
-  allocated_storage = 2000
+  allocated_storage = 2200
   name = "fec"
   username = "fec"
   password = "${var.rds_production_password}"
@@ -216,7 +216,7 @@ resource "aws_db_instance" "rds_production" {
   auto_minor_version_upgrade = true
   storage_type = "io1"
   identifier = "fec-govcloud-prod"
-  iops = 13000
+  iops = 14000
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
@@ -230,12 +230,13 @@ resource "aws_db_instance" "rds_production_replica_1" {
   }
   replicate_source_db = "${aws_db_instance.rds_production.identifier}"
   instance_class = "db.r3.2xlarge"
+  allocated_storage = 2200
   publicly_accessible = true
   storage_encrypted = true
   auto_minor_version_upgrade = true
   storage_type = "io1"
   identifier = "fec-govcloud-prod-replica-1"
-  iops = 13000
+  iops = 14000
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
@@ -249,12 +250,13 @@ resource "aws_db_instance" "rds_production_replica_2" {
   }
   replicate_source_db = "${aws_db_instance.rds_production.identifier}"
   instance_class = "db.r3.2xlarge"
+  allocated_storage = 2200
   publicly_accessible = true
   storage_encrypted = true
   auto_minor_version_upgrade = true
   storage_type = "io1"
   identifier = "fec-govcloud-prod-replica-2"
-  iops = 13000
+  iops = 14000
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
@@ -270,7 +272,7 @@ resource "aws_db_instance" "rds_staging" {
   engine = "postgres"
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
-  allocated_storage = 2000
+  allocated_storage = 2200
   name = "fec"
   username = "fec"
   password = "${var.rds_staging_password}"
@@ -319,6 +321,7 @@ resource "aws_db_instance" "rds_development" {
 resource "aws_db_instance" "rds_development_replica_1" {
   replicate_source_db = "${aws_db_instance.rds_development.identifier}"
   instance_class = "db.r3.2xlarge"
+  allocated_storage = 2200
   publicly_accessible = true
   storage_encrypted = true
   storage_type = "gp2"
