@@ -301,7 +301,7 @@ resource "aws_db_instance" "rds_staging_replica_1" {
   publicly_accessible = true
   storage_encrypted = true
   auto_minor_version_upgrade = true
-  storage_type = "io1"
+  storage_type = "gp2"
   identifier = "fec-govcloud-stage-replica-1"
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
