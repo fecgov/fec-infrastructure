@@ -296,7 +296,7 @@ resource "aws_db_instance" "rds_staging_replica_1" {
     prevent_destroy = true
   }
   replicate_source_db = "${aws_db_instance.rds_staging.identifier}"
-  instance_class = "db.r3.2xlarge"
+  instance_class = "db.r3.4xlarge"
   allocated_storage = 2200
   publicly_accessible = true
   storage_encrypted = true
