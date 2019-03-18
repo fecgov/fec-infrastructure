@@ -229,14 +229,14 @@ resource "aws_db_instance" "rds_production_replica_1" {
     prevent_destroy = true
   }
   replicate_source_db = "${aws_db_instance.rds_production.identifier}"
-  instance_class = "db.r3.2xlarge"
+  instance_class = "db.r4.8xlarge"
   allocated_storage = 2200
   publicly_accessible = true
   storage_encrypted = true
   auto_minor_version_upgrade = true
   storage_type = "io1"
   identifier = "fec-govcloud-prod-replica-1"
-  iops = 14000
+  iops = 20000
   maintenance_window = "Sat:06:00-Sat:08:00"
   parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
