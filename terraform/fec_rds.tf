@@ -203,7 +203,7 @@ resource "aws_db_instance" "rds_production" {
   engine = "postgres"
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
-  allocated_storage = 2200
+  allocated_storage = 3500
   name = "fec"
   username = "fec"
   password = "${var.rds_production_password}"
@@ -230,7 +230,7 @@ resource "aws_db_instance" "rds_production_replica_1" {
   }
   replicate_source_db = "${aws_db_instance.rds_production.identifier}"
   instance_class = "db.r4.8xlarge"
-  allocated_storage = 2500
+  allocated_storage = 3500
   publicly_accessible = true
   storage_encrypted = true
   auto_minor_version_upgrade = true
@@ -250,7 +250,7 @@ resource "aws_db_instance" "rds_production_replica_2" {
   }
   replicate_source_db = "${aws_db_instance.rds_production.identifier}"
   instance_class = "db.r4.8xlarge"
-  allocated_storage = 2500
+  allocated_storage = 3500
   publicly_accessible = true
   storage_encrypted = true
   auto_minor_version_upgrade = true
