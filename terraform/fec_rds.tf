@@ -272,7 +272,7 @@ resource "aws_db_instance" "rds_staging" {
   engine = "postgres"
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
-  allocated_storage = 2200
+  allocated_storage = 3500
   name = "fec"
   username = "fec"
   password = "${var.rds_staging_password}"
@@ -297,7 +297,7 @@ resource "aws_db_instance" "rds_staging_replica_1" {
   }
   replicate_source_db = "${aws_db_instance.rds_staging.identifier}"
   instance_class = "db.r4.8xlarge"
-  allocated_storage = 2200
+  allocated_storage = 3500
   publicly_accessible = true
   storage_encrypted = true
   auto_minor_version_upgrade = true
@@ -319,7 +319,7 @@ resource "aws_db_instance" "rds_development" {
   engine = "postgres"
   engine_version = "9.6.1"
   instance_class = "db.r3.2xlarge"
-  allocated_storage = 2200
+  allocated_storage = 3500
   name = "fec"
   username = "fec"
   password = "${var.rds_development_password}"
@@ -341,7 +341,7 @@ resource "aws_db_instance" "rds_development" {
 resource "aws_db_instance" "rds_development_replica_1" {
   replicate_source_db = "${aws_db_instance.rds_development.identifier}"
   instance_class = "db.r3.2xlarge"
-  allocated_storage = 2200
+  allocated_storage = 3500
   publicly_accessible = true
   storage_encrypted = true
   storage_type = "gp2"
