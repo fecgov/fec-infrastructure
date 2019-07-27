@@ -222,7 +222,7 @@ resource "aws_db_instance" "rds_production" {
   parameter_group_name = "fec-default-log-all-prod"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
-  enabled_cloudwatch_logs_exports = "postgresql"
+  enabled_cloudwatch_logs_exports = ["postgresql"]
   deletion_protection = true
   apply_immediately = true
 }
@@ -245,7 +245,7 @@ resource "aws_db_instance" "rds_production_replica_1" {
   parameter_group_name = "fec-default-log-all-prod"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
-  enabled_cloudwatch_logs_exports = "postgresql"
+  enabled_cloudwatch_logs_exports = ["postgresql"]
   deletion_protection = true
   apply_immediately = true
 }
@@ -268,7 +268,7 @@ resource "aws_db_instance" "rds_production_replica_2" {
   parameter_group_name = "fec-default-log-all-prod"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
-  enabled_cloudwatch_logs_exports = "postgresql"
+  enabled_cloudwatch_logs_exports = ["postgresql"]
   deletion_protection = true
   apply_immediately = true
 }
@@ -298,7 +298,7 @@ resource "aws_db_instance" "rds_staging" {
   parameter_group_name = "fec-default-log-all-stage"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
-  enabled_cloudwatch_logs_exports = "postgresql"
+  enabled_cloudwatch_logs_exports = ["postgresql"]
   deletion_protection = true
   apply_immediately = true
 }
@@ -321,7 +321,7 @@ resource "aws_db_instance" "rds_staging_replica_1" {
   parameter_group_name = "fec-default-log-all-stage"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
-  enabled_cloudwatch_logs_exports = "postgresql"
+  enabled_cloudwatch_logs_exports = ["postgresql"]
   deletion_protection = true
   apply_immediately = true
 }
@@ -351,7 +351,7 @@ resource "aws_db_instance" "rds_development" {
   parameter_group_name = "fec-default-log-all-dev"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
-  enabled_cloudwatch_logs_exports = "postgresql"
+  enabled_cloudwatch_logs_exports = ["postgresql"]
   deletion_protection = true
   apply_immediately = true
 }
@@ -370,7 +370,7 @@ resource "aws_db_instance" "rds_development_replica_1" {
   parameter_group_name = "fec-default-log-all-dev"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
-  enabled_cloudwatch_logs_exports = "postgresql"
+  enabled_cloudwatch_logs_exports = ["postgresql"]
   deletion_protection = true
   apply_immediately = true
 }
