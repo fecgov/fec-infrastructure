@@ -202,7 +202,7 @@ resource "aws_db_instance" "rds_production" {
   snapshot_identifier = "rds:tf-20170223214825431394805grs-2017-03-16-09-02"
   engine = "postgres"
   engine_version = "9.6.1"
-  instance_class = "db.r3.2xlarge"
+  instance_class = "db.r4.2xlarge"
   allocated_storage = 3500
   name = "fec"
   username = "fec"
@@ -218,9 +218,12 @@ resource "aws_db_instance" "rds_production" {
   identifier = "fec-govcloud-prod"
   iops = 14000
   maintenance_window = "Sat:06:00-Sat:08:00"
-  parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
+  # parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
+  parameter_group_name = "fec-default-log-all-prod"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
+  enabled_cloudwatch_logs_exports = "postgresql"
+  deletion_protection = true
   apply_immediately = true
 }
 
@@ -238,9 +241,12 @@ resource "aws_db_instance" "rds_production_replica_1" {
   identifier = "fec-govcloud-prod-replica-1"
   iops = 20000
   maintenance_window = "Sat:06:00-Sat:08:00"
-  parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
+  # parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
+  parameter_group_name = "fec-default-log-all-prod"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
+  enabled_cloudwatch_logs_exports = "postgresql"
+  deletion_protection = true
   apply_immediately = true
 }
 
@@ -258,9 +264,12 @@ resource "aws_db_instance" "rds_production_replica_2" {
   identifier = "fec-govcloud-prod-replica-2"
   iops = 20000
   maintenance_window = "Sat:06:00-Sat:08:00"
-  parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
+  # parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
+  parameter_group_name = "fec-default-log-all-prod"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
+  enabled_cloudwatch_logs_exports = "postgresql"
+  deletion_protection = true
   apply_immediately = true
 }
 
@@ -271,7 +280,7 @@ resource "aws_db_instance" "rds_staging" {
   snapshot_identifier = "pre-final-staging-magnetic-snapshot-03-17-2017"
   engine = "postgres"
   engine_version = "9.6.1"
-  instance_class = "db.r3.2xlarge"
+  instance_class = "db.r4.2xlarge"
   allocated_storage = 3500
   name = "fec"
   username = "fec"
@@ -285,9 +294,12 @@ resource "aws_db_instance" "rds_staging" {
   auto_minor_version_upgrade = true
   identifier = "fec-govcloud-stage"
   maintenance_window = "Sat:06:00-Sat:08:00"
-  parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
+  # parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
+  parameter_group_name = "fec-default-log-all-stage"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
+  enabled_cloudwatch_logs_exports = "postgresql"
+  deletion_protection = true
   apply_immediately = true
 }
 
@@ -305,9 +317,12 @@ resource "aws_db_instance" "rds_staging_replica_1" {
   iops = 20000
   identifier = "fec-govcloud-stage-replica-1"
   maintenance_window = "Sat:06:00-Sat:08:00"
-  parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
+  # parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
+  parameter_group_name = "fec-default-log-all-stage"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
+  enabled_cloudwatch_logs_exports = "postgresql"
+  deletion_protection = true
   apply_immediately = true
 }
 
@@ -318,7 +333,7 @@ resource "aws_db_instance" "rds_development" {
   snapshot_identifier = "rds:tf-20170223214825431394805grs-2017-03-16-09-02"
   engine = "postgres"
   engine_version = "9.6.1"
-  instance_class = "db.r3.2xlarge"
+  instance_class = "db.r4.2xlarge"
   allocated_storage = 3500
   name = "fec"
   username = "fec"
@@ -332,15 +347,18 @@ resource "aws_db_instance" "rds_development" {
   auto_minor_version_upgrade = true
   identifier = "fec-govcloud-dev"
   maintenance_window = "Sat:06:00-Sat:08:00"
-  parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
+  # parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
+  parameter_group_name = "fec-default-log-all-dev"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
+  enabled_cloudwatch_logs_exports = "postgresql"
+  deletion_protection = true
   apply_immediately = true
 }
 
 resource "aws_db_instance" "rds_development_replica_1" {
   replicate_source_db = "${aws_db_instance.rds_development.identifier}"
-  instance_class = "db.r3.2xlarge"
+  instance_class = "db.r4.2xlarge"
   allocated_storage = 3500
   publicly_accessible = true
   storage_encrypted = true
@@ -348,8 +366,11 @@ resource "aws_db_instance" "rds_development_replica_1" {
   auto_minor_version_upgrade = true
   identifier = "fec-govcloud-dev-replica-1"
   maintenance_window = "Sat:06:00-Sat:08:00"
-  parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
+  # parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
+  parameter_group_name = "fec-default-log-all-dev"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
+  enabled_cloudwatch_logs_exports = "postgresql"
+  deletion_protection = true
   apply_immediately = true
 }
