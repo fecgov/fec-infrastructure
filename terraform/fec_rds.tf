@@ -326,29 +326,6 @@ resource "aws_db_instance" "rds_staging_replica_1" {
   apply_immediately = true
 }
 
-resource "aws_db_instance" "rds_staging_replica_2" {
-  lifecycle {
-    prevent_destroy = true
-  }
-  replicate_source_db = "${aws_db_instance.rds_staging.identifier}"
-  instance_class = "db.r4.8xlarge"
-  allocated_storage = 3500
-  publicly_accessible = true
-  storage_encrypted = true
-  auto_minor_version_upgrade = true
-  storage_type = "io1"
-  iops = 20000
-  identifier = "fec-govcloud-stage-replica-2"
-  maintenance_window = "Sat:06:00-Sat:08:00"
-  # parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
-  parameter_group_name = "fec-default-log-all-stage"
-  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
-  monitoring_interval = 5
-  enabled_cloudwatch_logs_exports = ["postgresql"]
-  deletion_protection = true
-  apply_immediately = true
-}
-
 resource "aws_db_instance" "rds_development" {
   lifecycle {
     prevent_destroy = true
