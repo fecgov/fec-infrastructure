@@ -293,7 +293,7 @@ resource "aws_db_instance" "rds_staging" {
   storage_type = "gp2"
   auto_minor_version_upgrade = true
   identifier = "fec-govcloud-stage"
-  maintenance_window = "Sat:07:00-Sat:08:00"
+  maintenance_window = "Sat:06:00-Sat:08:00"
   # parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   parameter_group_name = "fec-default-log-all-stage"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
@@ -334,7 +334,7 @@ resource "aws_db_instance" "rds_development" {
   engine = "postgres"
   engine_version = "9.6.1"
   instance_class = "db.r4.2xlarge"
-  allocated_storage = 3500
+  allocated_storage = 4000
   name = "fec"
   username = "fec"
   password = "${var.rds_development_password}"
