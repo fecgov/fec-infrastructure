@@ -293,7 +293,7 @@ resource "aws_db_instance" "rds_staging" {
   storage_type = "gp2"
   auto_minor_version_upgrade = true
   identifier = "fec-govcloud-stage"
-  maintenance_window = "Sat:06:00-Sat:08:00"
+  maintenance_window = "Sat:07:00-Sat:08:00"
   # parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
   parameter_group_name = "fec-default-log-all-stage"
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
