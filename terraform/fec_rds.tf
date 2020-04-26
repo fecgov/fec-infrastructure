@@ -380,7 +380,7 @@ resource "aws_rds_cluster" "rds_production_aurora_cluster" {
   engine = "aurora-postgresql"
   engine_version = "10.7"
   db_subnet_group_name = "${aws_db_subnet_group.rds.name}"
-  db_parameter_group_name  = "fec-aurora-cluster"
+  parameter_group_name  = "fec-aurora-cluster"
   backup_retention_period = 7
   preferred_backup_window = "Sat:06:00-Sat:08:00"
   preferred_maintenance_window = "Sat:06:00-Sat:08:00"
@@ -395,7 +395,7 @@ resource "aws_rds_cluster_instance" "rds_production_aurora_master" {
   master_username = "fec"
   master_password = "${var.rds_production_password}"
   multi_az = true
-  cluster_identifier = "${aws_rds_cluster.prod-aurora-test.id}"
+  cluster_identifier = "prod-aurora-test"
   vpc_security_group_ids = ["${aws_subnet.prd-telework.id}", "${aws_subnet.prd_primarydb_sg.id}"]
   publicly_accessible = true
   db_parameter_group_name = "fec-aurora-master"
