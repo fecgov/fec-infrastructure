@@ -403,6 +403,8 @@ resource "aws_rds_cluster_instance" "rds_production_aurora_master" {
   instance_class = "db.r4.2xlarge"
   db_subnet_group_name = "${aws_db_subnet_group.rds.name}"
   publicly_accessible   = true
+  engine = "aurora-postgresql"
+  engine_version = "10.7"
 
 #  multi_az = true
 #  db_parameter_group_name = "fec-aurora-master"
