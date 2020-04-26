@@ -381,15 +381,15 @@ resource "aws_rds_cluster_instance" "rds_production_aurora_cluster" {
   engine_version = "10.7"
   db_subnet_group_name = "${aws_db_subnet_group.rds.name}"
  # db_parameter_group_name  = "fec-aurora-cluster"
-  backup_retention_period = 7
+ # backup_retention_period = 7
   preferred_backup_window = "06:00-08:00"
   preferred_maintenance_window = "Sat:06:00-Sat:08:00"
   copy_tags_to_snapshot = true
-  deletion_protection = true
+ # deletion_protection = true
   apply_immediately = true
-  master_username = "fec"
-  database_name = "fec"
-  master_password = "${var.rds_production_password}"
+#  master_username = "fec"
+#  database_name = "fec"
+#  master_password = "${var.rds_production_password}"
   instance_class = "db.r4.2xlarge"
   identifier = "prod-aurora-master-test"
 }
