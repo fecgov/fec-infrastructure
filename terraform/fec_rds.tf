@@ -384,8 +384,8 @@ resource "aws_rds_cluster" "rds_production_aurora_cluster" {
   preferred_backup_window = "06:00-08:00"
   preferred_maintenance_window = "Sat:10:00-Sat:12:00"
   db_subnet_group_name = "${aws_db_subnet_group.rds.name}"
-  vpc_security_group_ids = ["${aws_security_group.prd-telework.id}", "${aws_security_group.prd_primarydb_sg.id}"]
-#  vpc_security_group_ids = ["${aws_security_group.rds.id}"] 
+#  vpc_security_group_ids = ["${aws_security_group.prd-telework.id}", "${aws_security_group.prd_primarydb_sg.id}"]
+  vpc_security_group_ids = ["${aws_security_group.rds.id}"] 
   # db_parameter_group_name  = "fec-aurora-cluster"
   storage_encrypted = true
  # copy_tags_to_snapshot = true
