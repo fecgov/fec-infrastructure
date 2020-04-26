@@ -387,7 +387,7 @@ resource "aws_rds_cluster" "rds_production_aurora_cluster" {
 #  vpc_security_group_ids = ["${aws_security_group.prd-telework.id}", "${aws_security_group.prd_primarydb_sg.id}"]
   vpc_security_group_ids = ["${aws_security_group.rds.id}"] 
   # db_parameter_group_name  = "fec-aurora-cluster"
-
+  storage_encrypted = true
  # copy_tags_to_snapshot = true
  # deletion_protection = true
  # apply_immediately = true
@@ -410,7 +410,7 @@ resource "aws_rds_cluster_instance" "rds_production_aurora_master" {
 #  backup_retention_period = 7
 #  preferred_backup_window = "Sat:06:00-Sat:08:00"
 #  preferred_maintenance_window = "Sat:06:00-Sat:08:00"
-   storage_encrypted = true
+   
  # auto_minor_version_upgrade = true
  # monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
 #  monitoring_interval = 5
