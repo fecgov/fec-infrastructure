@@ -398,13 +398,15 @@ resource "aws_rds_cluster" "rds_production_aurora_cluster" {
 }
 
 resource "aws_rds_cluster_instance" "rds_production_aurora_master" {
-  identifier = "prod-aurora-master-test"
+#  identifier = "prod-aurora-master-test"
   cluster_identifier = "${aws_rds_cluster.rds_production_aurora_cluster.id}"
   instance_class = "db.r4.2xlarge"
   db_subnet_group_name = "${aws_db_subnet_group.rds.name}"
-  publicly_accessible   = true
+  publicly_accessible = true
   engine = "aurora-postgresql"
   engine_version = "10.7"
+  count = 2
+  identifier = "prod-aurora-master-test-${count.index}"
 
 #  multi_az = true
 #  db_parameter_group_name = "fec-aurora-master"
