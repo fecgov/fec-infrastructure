@@ -382,7 +382,7 @@ resource "aws_rds_cluster" "rds_production_aurora_cluster" {
   master_password = "${var.rds_production_password}"
   backup_retention_period = 7
   preferred_backup_window = "06:00-08:00"
-  preferred_maintenance_window = "Sat:06:00-Sat:08:00"
+  preferred_maintenance_window = "Sat:10:00-Sat:12:00"
   db_subnet_group_name = "${aws_db_subnet_group.rds.name}"
 #  vpc_security_group_ids = ["${aws_subnet.prd-telework.id}", "${aws_subnet.prd_primarydb_sg.id}"]
   vpc_security_group_ids = ["${aws_security_group.rds.id}"] 
