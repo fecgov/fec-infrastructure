@@ -380,7 +380,7 @@ resource "aws_rds_cluster" "rds_production_aurora_cluster" {
   engine = "aurora-postgresql"
   engine_version = "10.7"
   db_subnet_group_name = "${aws_db_subnet_group.rds.name}"
-  db_parameter_group_name  = "fec-aurora-cluster"
+ # db_parameter_group_name  = "fec-aurora-cluster"
   backup_retention_period = 7
   preferred_backup_window = "Sat:06:00-Sat:08:00"
   preferred_maintenance_window = "Sat:06:00-Sat:08:00"
@@ -401,9 +401,9 @@ resource "aws_rds_cluster_instance" "rds_production_aurora_master" {
   db_parameter_group_name = "fec-aurora-master"
  # db_cluster_parameter_group_name = "fec-aurora-cluster"
 #  backup_retention_period = 7
-  preferred_backup_window = "Sat:06:00-Sat:08:00"
+ # preferred_backup_window = "Sat:06:00-Sat:08:00"
   preferred_maintenance_window = "Sat:06:00-Sat:08:00"
-  storage_encrypted = true
+ # storage_encrypted = true
   auto_minor_version_upgrade = true
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
