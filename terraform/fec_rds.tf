@@ -375,7 +375,7 @@ resource "aws_db_instance" "rds_development_replica_1" {
   apply_immediately = true
 }
 
-resource "aws_rds_cluster" "rds_production_aurora_cluster" {
+resource "aws_rds_cluster_instance" "rds_production_aurora_cluster" {
   cluster_identifier = "prod-aurora-test"
   engine = "aurora-postgresql"
   engine_version = "10.7"
