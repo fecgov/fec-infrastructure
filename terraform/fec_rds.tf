@@ -382,7 +382,7 @@ resource "aws_rds_cluster" "rds_production_aurora_cluster" {
   db_subnet_group_name = "${aws_db_subnet_group.rds.name}"
  # db_parameter_group_name  = "fec-aurora-cluster"
   backup_retention_period = 7
-  preferred_backup_window = "Sat:06:00-Sat:08:00"
+  preferred_backup_window = "06:00-08:00"
   preferred_maintenance_window = "Sat:06:00-Sat:08:00"
   copy_tags_to_snapshot = true
   deletion_protection = true
