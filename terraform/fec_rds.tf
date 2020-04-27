@@ -436,3 +436,33 @@ resource "aws_rds_cluster_instance" "staging_aurora_inst" {
   count = 2
   identifier = "stage-aurora-inst-${count.index}"
 }
+
+resource "aws_rds_cluster" "development-aurora-cluster" {
+  cluster_identifier = "dev-aurora-cluster"
+  database_name = "fec"
+  master_username = "fec"
+  master_password = "${var.rds_development_password}"
+  backup_retention_period = 7
+  preferred_backup_window = "06:00-08:00"
+  preferred_maintenance_window = "Sat:10:00-Sat:12:00"
+  db_subnet_group_name = "fec_rds"
+  vpc_security_group_ids = ["${aws_security_group.rds.id}"] 
+  storage_encrypted = true
+  copy_tags_to_snapshot = true
+  deletion_protection = true
+  apply_immediately = true
+  skip_final_snapshot = true
+  engine = "aurora-postgresql"
+  engine_version = "10.7"
+}
+
+resource "aws_rds_cluster_instance" "development_aurora_inst" {
+  cluster_identifier = "${aws_rds_cluster.development-aurora-cluster.id}"
+  instance_class = "db.r4.2xlarge"
+  db_subnet_group_name = "fec_rds"
+  publicly_accessible = true
+  engine = "aurora-postgresql"
+  engine_version = "10.7"
+  count = 2
+  identifier = "dev-aurora-inst-${count.index}"
+}
