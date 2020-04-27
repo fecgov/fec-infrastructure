@@ -390,7 +390,7 @@ resource "aws_rds_cluster" "production-aurora-cluster" {
   storage_encrypted = true
   copy_tags_to_snapshot = true
   deletion_protection = true
-  Apply_immediately = true
+  apply_immediately = true
   skip_final_snapshot = true
   engine = "aurora-postgresql"
   engine_version = "10.7"
