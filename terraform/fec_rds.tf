@@ -377,8 +377,6 @@ resource "aws_rds_cluster" "production-aurora-cluster" {
   engine_version = "10.7"
 }
 
-# this a temporary change of the instance class
-
 resource "aws_rds_cluster_instance" "production_aurora_inst" {
   cluster_identifier = "${aws_rds_cluster.production-aurora-cluster.id}"
   instance_class = "db.r4.8xlarge"
@@ -386,6 +384,7 @@ resource "aws_rds_cluster_instance" "production_aurora_inst" {
   publicly_accessible = true
   engine = "aurora-postgresql"
   engine_version = "10.7"
+  apply_immediately = true
   count = 1
   identifier = "prod-aurora-inst-${count.index}"
 }
@@ -416,7 +415,8 @@ resource "aws_rds_cluster_instance" "staging_aurora_inst" {
   publicly_accessible = true
   engine = "aurora-postgresql"
   engine_version = "10.7"
-  count = 2
+  apply_immediately = true
+  count = 1
   identifier = "stage-aurora-inst-${count.index}"
 }
 
@@ -447,6 +447,6 @@ resource "aws_rds_cluster_instance" "development_aurora_inst" {
   engine = "aurora-postgresql"
   engine_version = "10.7"
   apply_immediately = true
-  count = 2
+  count = 1
   identifier = "dev-aurora-inst-${count.index}"
 }
