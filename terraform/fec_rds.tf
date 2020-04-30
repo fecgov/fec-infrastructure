@@ -379,12 +379,12 @@ resource "aws_rds_cluster" "production-aurora-cluster" {
 
 resource "aws_rds_cluster_instance" "production_aurora_inst" {
   cluster_identifier = "${aws_rds_cluster.production-aurora-cluster.id}"
-  instance_class = "db.r4.2xlarge"
+  instance_class = "db.r4.8xlarge"
   db_subnet_group_name = "fec_rds"
   publicly_accessible = true
   engine = "aurora-postgresql"
   engine_version = "10.7"
-  count = 2
+  count = 1
   identifier = "prod-aurora-inst-${count.index}"
 }
 
