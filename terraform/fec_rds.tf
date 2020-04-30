@@ -377,6 +377,8 @@ resource "aws_rds_cluster" "production-aurora-cluster" {
   engine_version = "10.7"
 }
 
+# this a temporary change of the instance class
+
 resource "aws_rds_cluster_instance" "production_aurora_inst" {
   cluster_identifier = "${aws_rds_cluster.production-aurora-cluster.id}"
   instance_class = "db.r4.8xlarge"
