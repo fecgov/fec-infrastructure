@@ -385,7 +385,7 @@ resource "aws_rds_cluster_instance" "production_aurora_inst" {
   engine = "aurora-postgresql"
   engine_version = "10.7"
   apply_immediately = true
-  count = 1
+  count = 3
   identifier = "prod-aurora-inst-${count.index}"
 }
 
