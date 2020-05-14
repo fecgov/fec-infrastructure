@@ -341,7 +341,7 @@ resource "aws_rds_cluster" "staging-aurora-cluster" {
 
 resource "aws_rds_cluster_instance" "staging_aurora_inst" {
   cluster_identifier = "${aws_rds_cluster.staging-aurora-cluster.id}"
-  instance_class = "db.r4.8xlarge"
+  instance_class = "db.r4.2xlarge"
   db_subnet_group_name = "fec_rds"
   publicly_accessible = true
   engine = "aurora-postgresql"
