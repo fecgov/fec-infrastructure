@@ -223,7 +223,8 @@ resource "aws_db_instance" "rds_production" {
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
   enabled_cloudwatch_logs_exports = ["postgresql"]
-  deletion_protection = true
+  skip_final_snapshot = true
+  deletion_protection = false
   apply_immediately = true
 }
 
@@ -253,7 +254,8 @@ resource "aws_db_instance" "rds_staging" {
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
   enabled_cloudwatch_logs_exports = ["postgresql"]
-  deletion_protection = true
+  skip_final_snapshot = true
+  deletion_protection = false
   apply_immediately = true
 }
 
@@ -283,7 +285,8 @@ resource "aws_db_instance" "rds_development" {
   monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
   monitoring_interval = 5
   enabled_cloudwatch_logs_exports = ["postgresql"]
-  deletion_protection = true
+  skip_final_snapshot = true
+  deletion_protection = false
   apply_immediately = true
 }
 
