@@ -195,37 +195,6 @@ resource "aws_iam_role_policy" "rds_logs_policy" {
 EOF
 }
 
-resource "aws_db_instance" "rds_staging" {
-  lifecycle {
-    prevent_destroy = true
-  }
-  snapshot_identifier = "pre-final-staging-magnetic-snapshot-03-17-2017"
-  engine = "postgres"
-  engine_version = "9.6.1"
-  instance_class = "db.r4.2xlarge"
-  allocated_storage = 3500
-  name = "fec"
-  username = "fec"
-  password = "${var.rds_staging_password}"
-  db_subnet_group_name = "${aws_db_subnet_group.rds.name}"
-  vpc_security_group_ids = ["${aws_security_group.rds.id}"]
-  backup_retention_period = 30
-  publicly_accessible = true
-  storage_encrypted = true
-  storage_type = "gp2"
-  auto_minor_version_upgrade = true
-  identifier = "fec-govcloud-stage"
-  maintenance_window = "Sat:06:00-Sat:08:00"
-  # parameter_group_name = "${aws_db_parameter_group.fec_default.id}"
-  parameter_group_name = "fec-default-log-all-stage"
-  monitoring_role_arn = "${aws_iam_role.rds_logs_role.arn}"
-  monitoring_interval = 5
-  enabled_cloudwatch_logs_exports = ["postgresql"]
-  skip_final_snapshot = true
-  deletion_protection = false
-  apply_immediately = true
-}
-
 resource "aws_db_instance" "rds_development" {
   lifecycle {
     prevent_destroy = true
